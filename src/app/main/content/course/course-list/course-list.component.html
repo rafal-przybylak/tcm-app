@@ -1,0 +1,172 @@
+<div class="w-100-p"  fxLayout="column" fxFexFill >
+    <!-- <tcm-app-form tcmAdminElement [objectName]="objectName" [formValue]="courseModel" [formFields]="courseFields" (onSave)="save($event)">
+
+    </tcm-app-form> -->
+    <div tcmAdminElement >
+        <form class="mat-white-bg mat-elevation-z4 p-8 m-4 " (ngSubmit)="save(form)" fxLayout="column" fxLayoutAlign="start" [formGroup]="form">
+
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px" fxFlex="1 1 auto">
+
+                <mat-form-field fxFlex="30">
+                    <input matInput placeholder="Temat" formControlName="name" [(ngModel)]="courseModel.name" required>
+                    <mat-error *ngIf="formErrors.name.required">
+                        Temat jest wymagany!
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field fxFlex="50">
+                    <textarea matInput placeholder="Opis" formControlName="desc" [(ngModel)]="courseModel.desc" required matTextareaAutosize
+                        matAutosizeMinRows="1" matAutosizeMaxRows="5"></textarea>
+                    <mat-error *ngIf="formErrors.desc.required">
+                        Opis jest wymagany!
+                    </mat-error>
+                </mat-form-field>
+
+                <div fxFlex="20">
+                    <mat-checkbox placeholder="Bezpłatne" formControlName="free" [(ngModel)]="courseModel.free">Bezpłatne</mat-checkbox>
+
+                </div>
+
+            </div>
+
+            <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="start center" fxFlex="1 1 auto" fxLayoutWrap>
+                <div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="start center" fxFlex="1 1 auto" fxLayoutWrap>
+
+                    <div fxLayout="column" fxLayoutGap="5px">
+                        <span>Początek szkolenia</span>
+                        <owl-date-time placeholder="Data rozpoczęcia" formControlName="startDt" [(ngModel)]="courseModel.startDt" required></owl-date-time>
+                        <mat-error *ngIf="formErrors.startDt.required">
+                            Pole jest wymagane!
+                        </mat-error>
+                    </div>
+
+                    <div fxLayout="column" fxLayoutGap="5px">
+                        <span>"Koniec szkolenia </span>
+                        <owl-date-time matInput placeholder="Data zakończenia" [(ngModel)]="courseModel.endDt" formControlName="endDt"></owl-date-time>
+                        <mat-error *ngIf="formErrors.endDt.required">
+                            Pole jest wymagane!
+                        </mat-error>
+                    </div>
+                    <button mat-raised-button color="primary" [disabled]="!form.valid" type="submit">Zapisz</button>
+                    <button mat-mini-fab="mat-warn" (click)="addNew()" aria-label="Dodaj nowy" *fuseIfOnDom>
+                        <mat-icon>add</mat-icon>
+                    </button>
+                </div>
+                <agm-map fxFlex="2 2 auto" class=" w-300 h-300" [zoom]="12" [latitude]="courseModel.goelocLat" (mapClick)="placeMarker($event)"
+                    [longitude]="courseModel.goelocLong">
+                    <agm-marker [latitude]="courseModel.goelocLat" [longitude]="courseModel.goelocLong">
+                        <agm-circle [latitude]="courseModel.goelocLat" [longitude]="courseModel.goelocLong" [radius]="60" [fillOpacity]="0.50" [fillColor]="'#00A19A'"></agm-circle>
+                    </agm-marker>
+                </agm-map>
+                <!-- <mat-form-field fxFlex="200px">
+                <input matInput placeholder="Szerokość geog."  [(ngModel)]="courseModel.goelocLat" formControlName="goelocLat" required>
+                <mat-error *ngIf="formErrors.goelocLat.required">
+                    Temat jest wymagany!
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field fxFlex="200px">
+                <input matInput placeholder="Długość geog."  [(ngModel)]="courseModel.goelocLong" formControlName="goelocLong" required>
+                <mat-error *ngIf="formErrors.goelocLong.required">
+                    Temat jest wymagany!
+                </mat-error>
+            </mat-form-field> -->
+            </div>
+
+        </form>
+    </div>
+    <!-- CONTENT -->
+    <div fusePerfectScrollbar>
+
+        <div class="content p-24 w-100-p ">
+
+            <!-- WIDGET GROUP -->
+            <div class="widget-group" fxLayout="row" fxFlex="100" fxLayoutWrap fxLayoutAlign="start " *fuseIfOnDom [@animateStagger]="{value:'50'}">
+
+
+                <!-- WIDGET 2 -->
+                <fuse-widget *ngFor="let cours of courses" [@animate]="{value:'*',params:{y:'100%'}}" class="widget" fxLayout="column" fxFlex="100"
+                    fxFlex.gt-xs="100" fxFlex.gt-md="50">
+
+                    <!-- Front -->
+                    <div class="fuse-widget-front mat-white-bg mat-elevation-z2" fxLayout="column" (click)="onDetails(cours.id)">
+                        <div class="pl-16 pr-8 py-4 blue-100-bg"   fxLayout="row" fxLayoutAlign="space-between center">
+                            <!-- <div fxLayout="row" fxLayoutAlign="start center" *ngIf="auth.isAdmin" (click)="setCourse(cours.id) ">
+                                <button mat-icon-button class="fuse-widget-flip-button" aria-label="details">
+                                    <mat-icon>info_outline</mat-icon>
+
+                                </button>
+                                <div class="h3">Edycja</div>
+                            </div> -->
+                            <button mat-button *ngIf="auth.isAdmin" (click)="setCourse(cours.id)" >
+                                <div class="user-nemu" fxLayout="row" fxLayoutAlign="center center">
+                                    
+                                    <mat-icon >mode_edit</mat-icon>
+                                    <div class="h3">Edycja</div>
+                                </div>
+
+                            </button>
+                            <button mat-button *ngIf="auth.isAdmin" (click)="deleteCourse(cours.id)" >
+                                <div class="user-nemu" fxLayout="row" fxLayoutAlign="center center">
+                                    
+                                    <mat-icon >delete_forever</mat-icon>
+                                    <div class="h3">Usuń</div>
+                                </div>
+
+                            </button>
+                            <!-- <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button" aria-label="more">
+                                <mat-icon>more_vert</mat-icon>
+                            </button> -->
+                        </div>
+                        
+                        <div class="blue-100-bg p-4"  fxFlex >
+                            <div class="blue-fg font-size-36 line-height-36" style="text-align: center;">
+                                {{cours.name}}
+                            </div>
+
+                        </div>
+                        <div class="h3 date-period indigo-50-bg p-4" fxFlex >&nbsp;&nbsp;Szkolenie:&nbsp; {{cours.startDt | dateFormat}}   &nbsp;-&nbsp;   {{cours.endDt | dateFormat}}</div>
+                        <div class="h3 date-period indigo-50-bg p-4" fxFlex >Rejestracja:&nbsp; {{cours.startDt | dateFormat}}   &nbsp;-&nbsp;   {{cours.endDt | dateFormat}}</div>
+                        <div class="h3 p-8 grey-100-bg" fxFlex="auto">{{cours.desc}}</div>
+                        <!-- <div class="pl-16 pr-8 py-16 h-52" fxLayout="row" fxLayoutAlign="space-between center">
+                            <div class="h3">{{cours.desc}}</div>
+                            <div class="h3">{{cours.startDt | dateFormat}}</div>
+
+                        </div> -->
+
+
+                        <div class="p-8 grey-100-bg border-top " fxLayout="row" fxLayoutAlign="center center">
+                            <fuse-countdown *ngIf="cours.startDt>currentDate" class="red-fg font-size-10 line-height-10 " eventDate={{cours.endDt}}></fuse-countdown>
+
+                            <span *ngIf="cours.endDt<=currentDate" class="h3 blue-fg  text-truncate ">Szkolenie zakończone</span>
+                            <span *ngIf="cours.endDt>currentDate && cours.startDt<currentDate" class="h3  red-fg text-truncate ">Szkolenie aktualnie realizowane</span>
+
+
+                            <!-- <span class="h4 ml-8">test</span> -->
+                        </div>
+                    </div>
+                    <!-- / Front -->
+
+                    <!-- Back -->
+                    <div class="fuse-widget-back p-16 pt-32 mat-white-bg mat-elevation-z2">
+                        <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button" aria-label="Flip widget">
+                            <mat-icon class="s-16">close</mat-icon>
+                        </button>
+
+                        <agm-map [latitude]="cours.goelocLat" [longitude]="cours.goelocLag">
+                            <agm-marker [latitude]="cours.goelocLat" [longitude]="cours.goelocLag"></agm-marker>
+                        </agm-map>
+                    </div>
+                    <!-- / Back -->
+
+                </fuse-widget>
+                <!-- / WIDGET 2 -->
+
+
+
+            </div>
+            <!-- / WIDGET GROUP -->
+
+        </div>
+        <!-- / CONTENT -->
+    </div>
+</div>

@@ -1,0 +1,9 @@
+<mat-card class="dialog-confirm">
+	<mat-card-title *ngIf="title">{{title}}</mat-card-title>
+  <p [innerHTML]="message"></p>
+	<div class="actions">
+			<button mat-raised-button (click)="dialog.close()"  [attr.color]="'warn'">{{cancelButton}}</button>
+		<button mat-button (click)="dialog.close(true)">{{actionButton}}</button>
+	
+	</div>
+</mat-card>

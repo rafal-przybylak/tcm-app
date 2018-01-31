@@ -1,0 +1,64 @@
+<div fxFlexFill fxLayout="column" fxLayoutAlign="start "  >
+  <div fxFlex="65px" fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="space-between center" class="p-8" >
+ 
+    <div  *ngIf="allowAddNew">
+      
+      <button   mat-mini-fab class="add-file-button mat-warn" (click)="addNew()" aria-label="Dodaj nowy" *fuseIfOnDom>
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+    <div  *ngIf="chooseMode">
+      <button  mat-mini-fab class="add-file-button mat-action" (click)="onSelectionChoose()" aria-label="Wybierz" *fuseIfOnDom>
+        <mat-icon>playlist_add_check</mat-icon>
+      </button>
+    </div>
+    <div  *ngIf="selected.length==1 && allowEditDelete">
+        <button mat-raised-button (click)="edit()" aria-label="Edytuj" *fuseIfOnDom>
+          <mat-icon>mode_edit</mat-icon>
+        </button>
+      </div>
+      <div  *ngIf="selected.length>0 && allowEditDelete">
+          <button mat-raised-button (click)="delete()" aria-label="Usuń" *fuseIfOnDom>
+            <mat-icon>delete_forever</mat-icon>
+          </button>
+        </div>
+    <div fxFlex="auto">
+
+    </div>
+    <div class="w-300">
+      <mat-form-field class="w-100-p">
+        <input matInput #filter (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+      </mat-form-field>
+    </div>
+  </div>
+   <!-- <fuse-search-bar (onInput)="applyFilter($event)"></fuse-search-bar> -->
+  <!-- <div class='selected-column' *ngIf="!allowAddNew">
+    <h4>Wybrano:</h4>
+    <ul>
+      <li *ngFor='let sel of selected'>
+        {{sel.name}}
+      </li>
+      <li *ngIf="!selected.length">Nie wybrano elementów</li>
+    </ul>
+  </div> -->
+<div *ngIf="displayedColumns">
+  <ngx-datatable  fxFlex="auto"  
+  [rows]="dataSource" 
+  [columns]="displayedColumns" 
+  [columnMode]="'force'" 
+  [headerHeight]="30"
+  [footerHeight]="30" 
+  [rowHeight]="50"
+  [limit]="100"
+  [selected]="selected" 
+ 
+  (activate)="onActivate($event)" (select)='onSelect($event)'
+  [selectionType]="'multiClick'"
+  [selectAllRowsOnPage]="false"
+  [scrollbarV]="true"
+  [scrollbarH]="true" 
+  class="material ">
+  </ngx-datatable>
+
+</div>
+</div>

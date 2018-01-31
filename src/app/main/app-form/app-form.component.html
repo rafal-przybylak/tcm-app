@@ -1,0 +1,105 @@
+<!-- <div class="page-layout simple fullwidth angular-material-element" fusePerfectScrollbar>
+
+    
+    <div class="header mat-accent-bg p-auto4 h-60" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center">
+
+        <div fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="column" fxLayoutAlign.gt-xs="center start">
+            <div class="black-fg" fxLayout="row" fxLayoutAlign="start center">
+                <mat-icon class="secondary-text s-16">home</mat-icon>
+                <mat-icon class="secondary-text s-16">chevron_right</mat-icon>
+                <span class="secondary-text">{{objectName}}</span>
+              
+            </div>
+            <div class="hauto mt-4">{{objectName}}</div>
+        </div>
+
+    </div> -->
+
+<mat-card fxFlexFill fxLayout="column" >
+
+    <mat-toolbar fxFlex="32px" color="primary">
+        <span>{{objectName}}</span>
+    </mat-toolbar>
+
+
+
+
+    <ng-container *ngIf="allowAddNew">
+        <button mat-mini-fab="mat-warn" (click)="addNew()" aria-label="Dodaj nowy" *fuseIfOnDom>
+            <mat-icon>add</mat-icon>
+        </button>
+    </ng-container>
+
+    <form *ngIf="formGroup" fxFlex="auto" [formGroup]="formGroup" fxLayoutAlign="start" fxLayout="column">
+
+        <!-- <dynamic-material-form-control *ngFor="let controlModel of formFields" [group]="formGroup"  fxLayoutAlign="center top"  fxLayoutGap="10px" [model]="controlModel">
+
+            <ng-template  modelType="INPUT" align="START">
+        
+                <div class="label-content"><span>{{controlModel.label}}</span> </div>
+                
+            </ng-template>
+            <ng-template modelType="RADIO_GROUP" align="START">
+        
+                <div class="label-content"><span>{{controlModel.label}}</span></div>
+                
+            </ng-template>
+            <ng-template modelType="CHECKBOX_GROUP" align="START" >
+        
+                <div class="label-content"  ><span>{{controlModel.label}}</span></div>
+                
+            </ng-template>
+        </dynamic-material-form-control> -->
+      
+        <dynamic-material-form fxFlex="100" fusePerfectScrollbar [group]="formGroup" 
+        fxLayout="{{layout}}" 
+        fxLayoutAlign="{{ctrlAlign}}"
+        fxLayoutGap="10px" [model]="formFields">
+             <ng-template  modelType="INPUT" align="START" let-content="content" let-label="label">
+        
+                <div class="label-content" [innerHTML]="content"></div>
+                    
+                
+            </ng-template>
+            <ng-template modelType="RADIO_GROUP" align="START" let-content="content" let-label="label">
+       
+                <div class="label-content" [innerHTML]="content"></div>
+                
+            </ng-template>
+            <ng-template modelType="CHECKBOX_GROUP" align="START" let-content="content" let-label="label">
+        
+                <div class="label-content" [innerHTML]="content"></div>
+                
+            </ng-template>
+            <ng-template  modelType="TEXTAREA" align="START" let-content="content" let-label="label">
+        
+                <div class="label-content" [innerHTML]="content"></div>
+                    
+                
+            </ng-template>
+            <ng-template  modelType="DATEPICKER" align="START" let-content="content" let-label="label">
+        
+                <div class="label-content" [innerHTML]="content"></div>
+                    
+                
+            </ng-template>
+            <ng-template  modelType="SELECT" align="START" let-content="content" let-label="label">
+        
+                <div class="label-content" [innerHTML]="content"></div>
+                    
+                
+            </ng-template>
+            
+        </dynamic-material-form>
+      
+        <button fxFlex="32px" mat-raised-button color="primary" type="submit" (click)="save()">Zapisz</button>
+    </form>
+    <!-- <form [formGroup]="form" (ngSubmit)="save(formModel)">
+        <formly-form [model]="formModel" [fields]="formFields">
+          <button mat-raised-button color="primary" type="submit">Save</button>
+        </formly-form>
+      </form> -->
+</mat-card>
+
+<!-- <pre>{{formValue | json}}</pre> -->
+<!-- </div> -->

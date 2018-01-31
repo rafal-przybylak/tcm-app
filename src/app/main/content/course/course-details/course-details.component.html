@@ -1,0 +1,244 @@
+<div id="order" class="page-layout carded fullwidth" fusePerfectScrollbar>
+
+  <!-- TOP BACKGROUND -->
+  <div class="top-bg mat-accent-bg"></div>
+  <!-- / TOP BACKGROUND -->
+
+  <!-- CENTER -->
+  <div class="center">
+
+    <!-- HEADER -->
+    <div class="header white-fg" fxLayout="row" fxLayoutAlign="space-between center">
+
+      <!-- APP TITLE -->
+      <div fxLayout="row" fxLayoutAlign="start center">
+
+        <button class="mr-16" mat-icon-button [routerLink]="'courses'">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+
+        <div fxLayout="column" fxLayoutAlign="start start">
+          <div class="h2">
+            Szkolenie
+          </div>
+          <div class="subtitle secondary-text">
+            <span>Tytył: </span>
+            <span>{{course.name}}</span>
+          </div>
+        </div>
+      </div>
+      <!-- / APP TITLE -->
+
+    </div>
+    <!-- / HEADER -->
+
+    <!-- CONTENT CARD -->
+    <div class="content-card mat-white-bg">
+
+      <!-- CONTENT -->
+      <div class="content">
+
+        <mat-tab-group (selectedTabChange)="tabChanged($event)" #tabb>
+
+          <mat-tab label="Szkolenie">
+            <ng-template mat-tab-label>
+              <div fxLayout="row" fxLayoutGap="4px">
+                <mat-icon fxFlex>school</mat-icon>
+                <span fxFlex>Szkolenie</span>
+              </div>
+
+            </ng-template>
+            <div class="order-details tab-content p-24" fusePerfectScrollbar>
+
+
+
+              <div *ngIf="!isuserCourse" class="pb-16" fxLayout="row" fxLayoutAlign="center center" fxLayoutAlign="center center">
+                <button mat-fab color="accent" (click)="tabb.selectedIndex=1">
+                  <mat-icon>touch_app</mat-icon>
+
+                </button>
+
+              </div>
+              <div fxLayout="row">
+                <!-- <mat-card class="section pb-48" fxFlex="50">
+                    <mat-card-header>
+                      <mat-card-title ><h1 class="accent-900-fg">{{course.name}}</h1></mat-card-title>
+                      <mat-card-subtitle class="mat-display-1">Od {{course.startDt | dateFormat}} do {{course.endDt | dateFormat}}</mat-card-subtitle>
+                    </mat-card-header>
+                    <mat-card-content>
+                      {{course.desc}}
+                    </mat-card-content>
+
+                  </mat-card> -->
+                <div class="fuse-card" fxFlex="50">
+                  <div class="card-image">
+                    <img src="assets/images/cards/card2.jpg">
+                  </div>
+
+
+                  <div class="p-16">
+                    <div class="h1">{{course.name}}</div>
+                    <div class="card-divider"></div>
+                    <div class="h5 secondary-text">
+                      <div fxLayout="row" fxLayoutAlign="start center">
+                        <mat-icon class="s-16 amber-fg">star</mat-icon>
+                        <mat-icon class="s-16 amber-fg">star</mat-icon>
+                        <mat-icon class="s-16 amber-fg">star</mat-icon>
+                        <mat-icon class="s-16 amber-fg">star</mat-icon>
+                        <mat-icon class="s-16 amber-fg">star_half</mat-icon>
+                        <div class="ml-8 secondary-text">4.7</div>
+                        <div class="ml-4 secondary-text">(51)</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mb-16 px-16 text-bold">Od {{course.startDt | dateFormat}} do {{course.endDt | dateFormat}}</div>
+                  <div class="px-16 line-height-1.75">
+                    {{course.desc}}
+                  </div>
+
+
+
+
+                </div>
+                <!-- <div class="customer">
+                  <table class="simple">
+                    <thead>
+                      <tr>
+                        <th>Temat</th>
+                        <th>Data rozpoczęcia</th>
+                        <th>Data zakończnia</th>
+                        <th>Otwarte</th>
+                        <th>Opis</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+
+                        <td>
+                          <span class=" text-truncate">{{course.name}}</span>
+                        </td>
+                        <td>
+                          <span class=" text-truncate">{{course.startDt | dateFormat}}</span>
+                        </td>
+                        <td>
+                          <span class=" text-truncate">{{course.endDt | dateFormat}}</span>
+                        </td>
+                        <td>
+                          <span class=" text-truncate">{{course.free?"Tak":"Nie"}}</span>
+                        </td>
+                        <td>
+                          <span class=" text-truncate">{{course.desc}}</span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div> -->
+
+
+                <div class="section p-48" fxFlex="50">
+                  <div class="pb-16" fxLayout="row" fxLayoutAlign="start center">
+                    <mat-icon class="m-0 mr-16">location_on</mat-icon>
+                    <div class="h2 secondary-text">Lokalizacja</div>
+                  </div>
+                  <agm-map class="w-100-p h-400" [zoom]="12" [latitude]="course.goelocLat" [longitude]="course.goelocLong">
+                    <agm-marker [latitude]="course.goelocLat" [longitude]="course.goelocLong">
+                    </agm-marker>
+                  </agm-map>
+                </div>
+              </div>
+
+            </div>
+          </mat-tab>
+          <mat-tab label="Rejestracja" [disabled]="isuserCourse">
+            <ng-template mat-tab-label>
+              <div fxLayout="row" fxLayoutGap="4px" fxLayoutAlign="center center">
+                <mat-icon fxFlex>touch_app</mat-icon>
+                <span fxFlex>Rejestracja</span>
+              </div>
+            </ng-template>
+
+            <div class="order-details tab-content p-24  h-100-p" fusePerfectScrollbar>
+              <div class="section pb-48">
+
+                <mat-card>
+                  <mat-card-header fxLayout="column">
+                    <mat-card-title>Zarejestruj się na szkolenie </mat-card-title>
+                    <mat-card-subtitle>Resestracja na wybrane szkolenie będzie dostępna wkrótce</mat-card-subtitle>
+                  </mat-card-header>
+                  <mat-card-content>
+
+                  </mat-card-content>
+
+                </mat-card>
+
+              </div>
+            </div>
+          </mat-tab>
+          <mat-tab label="Matriały" [disabled]="!isuserCourse && !auth.isAdmin">
+            <ng-template mat-tab-label>
+              <div fxLayout="row" fxLayoutGap="4px" fxLayoutAlign="center center">
+
+                <mat-icon fxFlex>business_center</mat-icon>
+                <span fxFlex>Matriały</span>
+              </div>
+            </ng-template>
+            <div class="order-details tab-content p-24  h-100-p">
+              <div class="section pb-48">
+                <mat-card>
+                  <mat-card-header fxLayout="column">
+                    <mat-card-title>Materiały szkoleniowe dostępne będą wkrótce </mat-card-title>
+                  </mat-card-header>
+                  <mat-card-content>
+
+                  </mat-card-content>
+
+                </mat-card>
+              </div>
+            </div>
+          </mat-tab>
+          <mat-tab label="Egzaminy" [disabled]="!isuserCourse && !auth.isAdmin">
+            <ng-template mat-tab-label>
+              <div fxLayout="row" fxLayoutGap="4px" fxLayoutAlign="center center">
+                <mat-icon fxFlex>assignment_turned_in</mat-icon>
+                <span fxFlex>Egzaminy</span>
+              </div>
+            </ng-template>
+            <div class="order-details tab-content p-24  h-100-p">
+
+
+              <!-- <div class="pb-16" fxLayout="row" fxLayoutAlign="start center">
+                  <mat-icon class="m-0 mr-16">assignment_turned_in</mat-icon>
+                  <div class="h2 secondary-text">Egzaminy</div>
+                </div> -->
+
+              <app-list [allowAddNew]="auth.isAdmin" [allowEditDelete]="auth.isAdmin" [modelDef]="examDef" [loadRelations]="false" [data]="examRows"
+                (onRowActivate)="onExamActivate($event)" (goToAddNew)="addNewExam()" (onEdit)="onExamEdit($event)" (onDelete)="onExamDelete($event)">
+              </app-list>
+
+
+            </div>
+          </mat-tab>
+
+          <mat-tab label="Uczestnicy" [disabled]="!auth.isAdmin">
+            <ng-template mat-tab-label>
+              <div fxLayout="row" fxLayoutGap="4px" fxLayoutAlign="center center">
+                <mat-icon fxFlex>group</mat-icon>
+                <span fxFlex>Uczestnicy</span>
+              </div>
+            </ng-template>
+            <div class="order-details tab-content p-24 h-100-p">
+              <app-list [modelDef]="userDef" [loadRelations]="false" [data]="userRows" (onRowActivate)="onUserActivate($event)"
+                (goToAddNew)="addNewUser()" (onDelete)=onUserDelete($event)>
+              </app-list>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+      <!-- / CONTENT -->
+
+    </div>
+    <!-- / CONTENT CARD -->
+
+  </div>
+  <!-- / CENTER -->
+</div>

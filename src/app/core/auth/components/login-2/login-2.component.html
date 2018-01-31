@@ -1,0 +1,92 @@
+<div id="login" fxLayout="row" fxLayoutAlign="start">
+
+    <div id="login-intro" fxLayout="column" fxFlex fxHide fxShow.gt-xs>
+
+        <div class="logo-image" *fuseIfOnDom [@animate]="{value:'*',params:{scale:'0.2'}}">
+            <img  class="h-200" src="assets/images/logos/logo-mmp.png">
+        </div>
+
+        <div class="title" *fuseIfOnDom [@animate]="{value:'*',params:{delay:'50ms',y:'25px'}}">
+            Witamy w systemie szkoleń MM Poland Maszyny Standardy!
+        </div>
+
+        <div class="description" *fuseIfOnDom [@animate]="{value:'*',params:{delay:'100ms',y:'25px'}}">
+            
+        </div>
+        <div fxFlex="auto" ></div>
+        <div class="" *fuseIfOnDom [@animate]="{value:'*',params:{scale:'1'}}">
+            <img src="assets/images/logos/logo-ue.jpg">
+        </div>
+    </div>
+
+    <div id="login-form-wrapper" style="text-align: center;" fusePerfectScrollbar *fuseIfOnDom [@animate]="{value:'*',params:{delay:'300ms',x:'100%'}}">
+
+        <div id="login-form" >
+
+            <div class="logo" fxHide.gt-xs>
+                <span>F</span>
+            </div>
+
+            <div class="title">ZALOGUJ SIĘ</div>
+            <div class="description" class="red-fg" >{{errors}}</div>
+
+            <form name="loginForm" [formGroup]="loginForm" novalidate>
+
+                <mat-form-field>
+                    <input matInput placeholder="Email" formControlName="email">
+                    <mat-error *ngIf="loginFormErrors.email.required">
+                        Email jest wymagany
+                    </mat-error>
+                    <mat-error *ngIf="!loginFormErrors.email.required && loginFormErrors.email.email">
+                        Wprowadź poprawny adres
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input matInput placeholder="Hasło" type="password" formControlName="password">
+                    <mat-error *ngIf="loginFormErrors.password.required">
+                        Hasło jest wymagane
+                    </mat-error>
+                </mat-form-field>
+
+                <div class="remember-forgot-password" fxLayout="row" fxLayout.xs="column"
+                     fxLayoutAlign="space-between center">
+                    <mat-checkbox class="remember-me" aria-label="Remember Me">
+                        Zapamiętaj mnie
+                    </mat-checkbox>
+
+                    <a class="forgot-password" [routerLink]="'/auth-forgot-pass'">
+                        Resetuj hasło
+                    </a>
+                </div>
+
+                <button mat-raised-button color="accent" (click)="login()" class="submit-button" aria-label="LOGIN"
+                        [disabled]="loginForm.invalid">
+                    ZALOGUJ
+                </button>
+
+            </form>
+
+            <!-- <div class="separator">
+                <span class="text">OR</span>
+            </div>
+
+            <div fxLayout="column" fxLayoutAlign="start center">
+
+                <button mat-raised-button class="google">
+                    Log in with Google
+                </button>
+
+                <button mat-raised-button class="facebook">
+                    Log in with Facebook
+                </button>
+
+            </div> -->
+
+            <div class="register" fxLayout="column" fxLayoutAlign="center center">
+                <span class="text">Nie masz jeszcze konta?</span>
+                <a class="link" [routerLink]="'/auth-register'">Utwórz konto</a>
+            </div>
+        </div>
+    </div>
+</div>

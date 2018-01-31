@@ -1,0 +1,16 @@
+<mat-card fxFlexFill fxLayout="column" >
+
+    <mat-toolbar fxFlex="32px" color="primary">
+        <span>{{objectName}}</span>
+    </mat-toolbar>
+      <form  *ngIf="formGroup" fxFlex="auto" [formGroup]="formGroup" 
+      fxLayoutAlign="start stretch" fxLayout="column">
+
+        <dynamic-material-form [group]="formGroup" fxLayout="row" fxLayoutWrap 
+        fxLayoutAlign="center top" fxLayoutGap="10px" [model]="objectFields">
+            
+        </dynamic-material-form>
+        <quill-editor formControlName="content"></quill-editor> 
+        <button mat-raised-button color="primary" type="submit" (click)="save()">Zapisz</button>
+    </form>
+</mat-card>

@@ -1,0 +1,33 @@
+<div fxLayout="column" fxFlexFill fxLayoutAlign="start stretch"    >
+            <!-- <div class="header mat-accent-bg p-24 h-60" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center">
+                        
+                                <div fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="column" fxLayoutAlign.gt-xs="center start">
+                                    <div class="black-fg" fxLayout="row" fxLayoutAlign="start center">
+                                        <mat-icon class="secondary-text s-16">home</mat-icon>
+                                        <mat-icon class="secondary-text s-16">chevron_right</mat-icon>
+                                        <span class="secondary-text">{{objectName}}</span>
+                                      
+                                    </div>
+                                    <div class="h2 mt-4">{{objectName}}</div>
+                                </div>
+                        
+                            </div>  -->
+     
+      <tcm-app-form fxFlex="40" [ctrlAlign]="'center stretch'" [allowAddNew]=false tcmAdminElement [objectName]="objectName" [formValue]="objectModel" [formFields]="objectFields"
+            (onSave)="save($event)">
+      </tcm-app-form>
+
+      <app-list  fxFlex="60" 
+      [modelDef]="questionDef" 
+      [loadRelations]="false" 
+      [data]="questionRows"
+      (onEdit)="onQuestActivate($event)" (goToAddNew)="addNewQuest()"
+      (onDelete)="delete($event)">
+      </app-list>
+      <!-- <mat-tab-group *ngIf="!isNew" >
+                  <mat-tab label="Pytania" >
+                       
+                  </mat-tab>
+            </mat-tab-group> -->
+
+</div>

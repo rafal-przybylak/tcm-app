@@ -1,0 +1,100 @@
+<div id="register" fxLayout="row" fxLayoutAlign="start">
+
+        <div id="login-intro" fxLayout="column" fxFlex fxHide fxShow.gt-xs>
+
+                <div class="logo-image" *fuseIfOnDom [@animate]="{value:'*',params:{scale:'0.2'}}">
+                    <img  class="h-200" src="assets/images/logos/logo-mmp.png">
+                </div>
+        
+                <!-- <div class="title" *fuseIfOnDom [@animate]="{value:'*',params:{delay:'50ms',y:'25px'}}">
+                    Witamy w systemie szkoleń MM Poland Maszyny Standardy!
+                </div> -->
+        
+                <div class="description" *fuseIfOnDom [@animate]="{value:'*',params:{delay:'100ms',y:'25px'}}">
+                    
+                </div>
+                <div fxFlex="auto" ></div>
+                <div class="" *fuseIfOnDom [@animate]="{value:'*',params:{scale:'1'}}">
+                    <img src="assets/images/logos/logo-ue.jpg">
+                </div>
+            </div>
+
+    <div id="register-form-wrapper" style="text-align: center;" fusePerfectScrollbar *fuseIfOnDom [@animate]="{value:'*',params:{delay:'300ms',x:'100%'}}">
+
+        <div id="register-form">
+
+            <div class="logo" fxHide.gt-xs>
+                <span>F</span>
+            </div>
+
+            <div class="title">UTWÓRZ KONTO</div>
+            <div class="description" class="red-fg" > {{errors}}</div>
+
+            <form name="registerForm" [formGroup]="registerForm" novalidate>
+
+                <mat-form-field>
+                    <input matInput placeholder="Imię" formControlName="firstName">
+                    <mat-error *ngIf="registerFormErrors.firstName.required">
+                        Imię jest wymagana
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput placeholder="Nazwisko" formControlName="lastName">
+                    <mat-error *ngIf="registerFormErrors.lastName.required">
+                        Nazwisko jest wymagana
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput placeholder="Email" formControlName="email">
+                    <mat-error *ngIf="registerFormErrors.email.required">
+                        Email jes wymagany
+                    </mat-error>
+                    <mat-error *ngIf="!registerFormErrors.email.required && registerFormErrors.email.email">
+                        Wprowadź poprawny adres email
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input  matInput placeholder="Hasło" formControlName="password" [type]="hide ? 'password' : 'text'">
+                    <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+                    <mat-error *ngIf="registerFormErrors.password.required">
+                       Hasło jest wymagane
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input matInput placeholder="Potwierdź hasło " formControlName="passwordConfirm" [type]="hide ? 'password' : 'text'">
+                    <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+                    <mat-hint *ngIf="registerForm.hasError('nomatch')">Hasła nie są jednakowe</mat-hint>
+                    <mat-error *ngIf="registerFormErrors.passwordConfirm.required">
+                       Potwierdzenie hasła jest wymagane
+                    </mat-error>
+                </mat-form-field>
+
+                <div class="terms" fxLayout="row" fxLayoutAlign="center center">
+                    <mat-checkbox name="terms"  aria-label="Accept"   formControlName="termsAccepted"   [(ngModel)]="termsAccepted">
+                        <span>Akceptuję</span>
+                    </mat-checkbox>
+                   
+                    <button mat-button color="accent" (click)="useTerms()">warunki korzystania</button>
+                    <!-- <a href="useTerms()">warunki korzystania</a> -->
+                    
+                </div>
+                <mat-error  *ngIf="!termsAccepted">
+                    Zaakceptuj warunki korzystania
+                 </mat-error>
+               
+                <button mat-raised-button color="accent" class="submit-button" aria-label="CREATE AN ACCOUNT"
+                        [disabled]="registerForm.invalid" (click)="register()">
+                    UTWÓRZ KONTO
+                </button>
+
+            </form>
+
+            <div class="register" fxLayout="column" fxLayoutAlign="center center">
+                <span class="text">Posiadasz konto?</span>
+                <a class="link" [routerLink]="'/auth-login'">Przejdź do logowania</a>
+            </div>
+        </div>
+    </div>
+</div>

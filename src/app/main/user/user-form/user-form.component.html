@@ -1,0 +1,57 @@
+<mat-card>
+  <mat-card-title>{{title}}</mat-card-title>
+  <div *ngIf="errorMessage" class="alert is-critical">
+    <p>{{errorMessage}}</p>
+    <button class="close-button" mat-button (click)="errorMessage = null">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <form #f="ngForm" (ngSubmit)="onSave()">
+    <div class="form-group form-group-full-width">
+      <mat-input-container>
+        <input [(ngModel)]="model.firstName" type="text" matInput  name="firstName" placeholder="First Name"/>
+      </mat-input-container>
+    </div>
+    <div class="form-group form-group-full-width">
+      <mat-input-container>
+        <input [(ngModel)]="model.lastName" type="text" matInput  name="lastName" placeholder="Last Name"/>
+      </mat-input-container>
+    </div>
+    <div class="form-group form-group-full-width">
+      <mat-input-container>
+        <input [(ngModel)]="model.email" type="email" matInput  name="email" placeholder="Email" [required]="true"/>
+      </mat-input-container>
+    </div>
+    <div class="form-group form-group-full-width">
+      <mat-input-container>
+        <input [(ngModel)]="model.username" matInput  name="username" placeholder="Username" [required]="true"/>
+      </mat-input-container>
+    </div>
+    <div class="form-group form-group-full-width">
+      <mat-input-container>
+        <input [(ngModel)]="model.password" type="password" matInput  name="password" placeholder="Password"
+               [required]="passwordRequired"/>
+      </mat-input-container>
+    </div>
+    <div class="form-group form-group-full-width">
+        <mat-checkbox class="user-role-checkbox" name="user-role"  [(ngModel)]="model.passChangeRequired">
+Wymagana zmiana hasła
+</mat-checkbox>
+      </div>
+    <div *ngIf="model.id" adminElement class="form-group form-group-full-width">
+      <label class="form-label">Roles</label>
+      <div *ngFor="let role of roles">
+        <mat-checkbox class="user-role-checkbox" name="user-role" value="role"
+                     (change)="updateRoles(role, $event)" [checked]="isExistById(model.roles,role)">
+          {{role.name}}
+        </mat-checkbox>
+      </div>
+    </div>
+
+    <div class="form-group card-actions">
+      <button type="submit" mat-raised-button color="primary"  >{{action}}</button>
+      <button type="button" mat-button color="warn" (click)="dialog.close()">Anuluj</button>
+    </div>
+
+  </form>
+</mat-card>

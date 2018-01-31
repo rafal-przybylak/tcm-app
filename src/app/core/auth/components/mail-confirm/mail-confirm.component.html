@@ -1,0 +1,27 @@
+<div id="mail-confirm" fxLayout="column" fusePerfectScrollbar *ngIf="isError">
+
+    <div id="mail-confirm-form-wrapper" fxLayout="column" fxLayoutAlign="center center">
+
+        <div id="mail-confirm-form" *fuseIfOnDom [@animate]="{value:'*',params:{duration:'300ms',y:'100px'}}">
+
+            <div class="logo">
+                <mat-icon class="s-96">email</mat-icon>
+            </div>
+
+            <div class="title">Potwierdzanie adresu e-mail!</div>
+
+            <div class="subtitle">
+                <p>
+                   Potwierdzenie adresu <b>NIE</b> zostało wykonane! .
+                </p>
+            </div>
+
+            <div class="message">
+                <button mat-button (click)="confirmRequest()">Wyślij nowe żądanie potwierdzenia adresu</button>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,57 @@
+<!-- <tcm-app-form fxFlex="auto" [allowAddNew]=false  [objectName]="objectName" [formValue]="objectModel" [formFields]="objectFields"
+(onSave)="save($event)" [layout]="'column'" [fieldsObservable]="formService.getControlsWithValueModel(data.object.id,auth.getCurrentUserId())">
+</tcm-app-form> -->
+
+<mat-card fxFlexFill fxLayout="column" >
+
+    <mat-toolbar fxFlex="32px 32px 32px" color="primary">
+        <span>{{objectName}}</span>
+    </mat-toolbar>
+
+    <form *ngIf="formGroup" fxFlex [formGroup]="formGroup" fxLayoutAlign="start" fxLayout="column">
+
+        <dynamic-material-form fxFlex fusePerfectScrollbar [group]="formGroup" 
+        fxLayout="column" 
+        fxLayoutAlign="start"
+        fxLayoutGap="10px" [model]="objectFields">
+             <ng-template  modelType="INPUT" align="START" let-content="content" let-label="label">
+        
+                <div class="label-content" [innerHTML]="content"></div>
+                    
+                
+            </ng-template>
+            <ng-template modelType="RADIO_GROUP" align="START" let-content="content" let-label="label">
+       
+                <div class="label-content" [innerHTML]="content"></div>
+                
+            </ng-template>
+            <ng-template modelType="CHECKBOX_GROUP" align="START" let-content="content" let-label="label">
+        
+                <div class="label-content" [innerHTML]="content"></div>
+                
+            </ng-template>
+            <ng-template  modelType="TEXTAREA" align="START" let-content="content" let-label="label">
+        
+                <div class="label-content" [innerHTML]="content"></div>
+                    
+                
+            </ng-template>
+            <ng-template  modelType="DATEPICKER" align="START" let-content="content" let-label="label">
+        
+                <div class="label-content" [innerHTML]="content"></div>
+                    
+                
+            </ng-template>
+            <ng-template  modelType="SELECT" align="START" let-content="content" let-label="label">
+        
+                <div class="label-content" [innerHTML]="content"></div>
+                    
+                
+            </ng-template>
+            
+        </dynamic-material-form>
+      
+        <button fxFlex="32px" mat-raised-button color="primary" type="submit" (click)="save()">Zapisz</button>
+    </form>
+   
+</mat-card>

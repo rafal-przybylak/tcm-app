@@ -1,0 +1,37 @@
+<div id="about" class="p-4" fxLayout="row"  fxFlexFill fxLayoutAlign="center stretch">
+
+    <div class="about-content" fxLayout="column" fxFlexFill fxFlex="100" 
+         *fuseIfOnDom [@animateStagger]="{value:'50'}">
+
+        <div class="profile-box info-box general" fxLayout="column" fxFlex="200px"
+             [@animate]="{value:'*',params:{y:'100%'}}">
+
+            <!-- <header class="mat-accent-bg">
+                <div class="title">Podstawowe dane</div>
+            </header> -->
+
+            <div class="content" fxLayout="column" fxFlex="100" fxLayoutAlign="start stretch">
+                    <tcm-app-form [ctrlAlign]="'center stretch'"  [allowAddNew]=false fxFlex="100" [objectName]="'Podstawowe dane'"   [formValue]="objectUserModel" [formFields]="objectUserFields"
+                    (onSave)="saveUser($event)">
+              </tcm-app-form>
+        
+            </div>
+
+        </div>
+
+        <div class="profile-box info-box work" fxLayout="column" fxFlex="1 0 210px"
+             [@animate]="{value:'*',params:{y:'100%'}}">
+
+             <div class="content" fxLayout="column" fxFlex="100" fxLayoutAlign="start stretch">
+                <tcm-app-form [ctrlAlign]="'center stretch'"  [allowAddNew]=false fxFlex="100" [objectName]="'Dane szczegółowe'"   [formValue]="objectUserDataModel" [formFields]="objectUserDataFields"
+                (onSave)="saveUserData($event)">
+          </tcm-app-form>
+
+            <div class="content">
+               
+            </div>
+        </div>
+
+    </div>
+
+</div>
