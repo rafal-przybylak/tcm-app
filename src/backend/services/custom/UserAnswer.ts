@@ -14,6 +14,7 @@ import { UserAnswer } from '../../models/UserAnswer';
 import { SocketConnection } from '../../sockets/socket.connections';
 import { User } from '../../models/User';
 import { TestQuestion } from '../../models/TestQuestion';
+import { UserCourseTest } from '../../models/UserCourseTest';
 
 
 /**
@@ -38,7 +39,7 @@ export class UserAnswerApi extends BaseLoopBackApi {
   }
 
   /**
-   * Fetches belongsTo relation user.
+   * Fetches belongsTo relation trainer.
    *
    * @param {any} id userAnswer id
    *
@@ -53,10 +54,10 @@ export class UserAnswerApi extends BaseLoopBackApi {
    * This usually means the response is a `UserAnswer` object.)
    * </em>
    */
-  public getUser(id: any, refresh: any = {}, customHeaders?: Function): Observable<any> {
+  public getTrainer(id: any, refresh: any = {}, customHeaders?: Function): Observable<any> {
     let _method: string = "GET";
     let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
-    "/userAnswers/:id/user";
+    "/userAnswers/:id/trainer";
     let _routeParams: any = {
       id: id
     };
@@ -87,6 +88,36 @@ export class UserAnswerApi extends BaseLoopBackApi {
     let _method: string = "GET";
     let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
     "/userAnswers/:id/question";
+    let _routeParams: any = {
+      id: id
+    };
+    let _postBody: any = {};
+    let _urlParams: any = {};
+    if (typeof refresh !== 'undefined' && refresh !== null) _urlParams.refresh = refresh;
+    let result = this.request(_method, _url, _routeParams, _urlParams, _postBody, null, customHeaders);
+    return result;
+  }
+
+  /**
+   * Fetches belongsTo relation userCourseTest.
+   *
+   * @param {any} id userAnswer id
+   *
+   * @param {boolean} refresh 
+   *
+   * @returns {object} An empty reference that will be
+   *   populated with the actual data once the response is returned
+   *   from the server.
+   *
+   * <em>
+   * (The remote method definition does not provide any description.
+   * This usually means the response is a `UserAnswer` object.)
+   * </em>
+   */
+  public getUserCourseTest(id: any, refresh: any = {}, customHeaders?: Function): Observable<any> {
+    let _method: string = "GET";
+    let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
+    "/userAnswers/:id/userCourseTest";
     let _routeParams: any = {
       id: id
     };

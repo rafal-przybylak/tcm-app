@@ -35,3 +35,6 @@
 @import "partials/plugins/plugins";
 
 @import '~ng-pick-datetime/assets/style/picker.min.css';
+.long-textarea{
+    min-width: 500px;
+}

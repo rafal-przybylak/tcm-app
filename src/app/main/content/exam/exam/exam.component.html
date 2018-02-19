@@ -13,13 +13,13 @@
                         
                             </div>  -->
      
-      <tcm-app-form fxFlex="40" [ctrlAlign]="'center stretch'" [allowAddNew]=false tcmAdminElement [objectName]="objectName" [formValue]="objectModel" [formFields]="objectFields"
+      <tcm-app-form fxFlex="1 1 200px" [ctrlAlign]="'center stretch'" [allowAddNew]=false tcmAdminElement [objectName]="objectName" [formValue]="objectModel" [formFields]="objectFields"
             (onSave)="save($event)">
       </tcm-app-form>
 
-      <app-list  fxFlex="60" 
+      <app-list  fxFlex="auto" 
       [modelDef]="questionDef" 
-      [loadRelations]="false" 
+      [loadRelations]="[scopeDef]"
       [data]="questionRows"
       (onEdit)="onQuestActivate($event)" (goToAddNew)="addNewQuest()"
       (onDelete)="delete($event)">

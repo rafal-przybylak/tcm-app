@@ -31,19 +31,22 @@ export class AppListComponent implements OnInit {
   @Output() public onEdit = new EventEmitter<any>();
   @Output() public onDelete = new EventEmitter<any>();
   @Output() public onChoose = new EventEmitter<any>();
-  @Input() public loadRelations: boolean;
+  @Input() public loadRelations: Array<any> = new Array<any>();
   @Input() public allowAddNew: boolean = true;
   @Input() public allowEditDelete: boolean = true;
   @Input() public chooseMode: boolean = false;
   //@Input() public data: any[] ;// Observable<any[]> =new  Observable<any[]>() ;
   private _data = new BehaviorSubject<any[]>([]);
   //public data2: any[] ;
-  // props = this.modelDef.properties;
+  // props = modelDef.properties;
   private subscribe: any;
   @Input()
   set data(value) {
     // set the latest value for _data BehaviorSubject
-    this._data.next(value);
+    if(Array.isArray(value)){
+      this._data.next(value);
+    }
+    
   };
 
   get data() {
@@ -64,47 +67,55 @@ export class AppListComponent implements OnInit {
     // {
     //   this._data.next(this.data2);
     // }
-}
+  }
   ngOnInit() {
 
     this.subscribe = this._data.subscribe(data => {
-      if(data){
-      this.dataSource = data;
-      this.tempDataSource=[...data];
-      this.filter.value=null;
-       this.selected=[];
+      if (data) {
+        this.dataSource = data;
+        this.tempDataSource = [...data];
+        this.filter.value = null;
+        this.selected = [];
       }
     });
 
-
+    this.loadColumnDef(this.modelDef,'');
     // this.displayedColumns.push({ checkboxable: true, headerCheckboxable: true })
     //this.tempDataSource = [...this.dataSource];
-    Object.keys(this.modelDef.properties).forEach(key => {
-      if (this.modelDef.properties[key].title != "undefined" && this.modelDef.properties[key].title != "") {
-
-        if (this.modelDef.properties[key].type == "Date") {
-          this.displayedColumns.push({ prop: key, name: this.modelDef.properties[key].title, pipe: new DateFormatPipe(this.translate) });//'lll', this.translate.currentLang) });
-        }
-        else {
-          this.displayedColumns.push({ prop: key, name: this.modelDef.properties[key].title });
-        }
-      }
-    });
-    if (this.loadRelations) {
+   
+    this.loadRelations.forEach(element => {
       Object.keys(this.modelDef.relations).forEach(key => {
-        if (this.modelDef.relations[key].relationType == "belongsTo") {
-          this.displayedColumns.push({
-            prop: this.modelDef.relations[key].name + ".name",
-            name: this.sdkModels.get(this.modelDef.relations[key].model).getModelDefinition().title
-          });
+        if (this.modelDef.relations[key].relationType == "belongsTo" && this.modelDef.relations[key].type==element.name) {
+          this.loadColumnDef(element,this.modelDef.relations[key].name+".");
+          // this.displayedColumns.push({
+          //   width: 300,
+          //   prop: this.modelDef.relations[key].name + ".name",
+          //   name: this.sdkModels.get(this.modelDef.relations[key].model).getModelDefinition().title
+          // });
         }
 
       });
-    }
+    });
 
   }
   ngOnDestroy() {
     this.subscribe.unsubscribe();
+  }
+  loadColumnDef(modelDef:any,masterModelPrefix:string){
+    Object.keys(modelDef.properties).forEach(key => {
+      if (modelDef.properties[key].title != "undefined" && modelDef.properties[key].title != "" && key.substr(key.length-2)!="Id") {
+
+        if (modelDef.properties[key].type == "Date") {
+          this.displayedColumns.push({ prop: masterModelPrefix+key, width: 150, name:(masterModelPrefix? modelDef.title.split("|")[0]+" - ":"")+ modelDef.properties[key].title, pipe: new DateFormatPipe(this.translate) });//'lll', this.translate.currentLang) });
+        }
+        else if (modelDef.properties[key].type == "boolean" || modelDef.properties[key].type == "number") {
+          this.displayedColumns.push({ prop: masterModelPrefix+key, width: 100, name:(masterModelPrefix? modelDef.title.split("|")[0]+" - ":"")+ modelDef.properties[key].title});
+        }
+        else {
+          this.displayedColumns.push({ prop: masterModelPrefix+key, width: 400, name:(masterModelPrefix? modelDef.title.split("|")[0]+" - ":"")+ modelDef.properties[key].title });
+        }
+      }
+    });
   }
   applyFilter(value) {
     this.selected = [];

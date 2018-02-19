@@ -1,6 +1,9 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { NavigationModel } from '../../../navigation.model';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable } from 'rxjs/Observable';
+import { CoreConfig } from '../../api.config';
+import { NbAuthService } from '../../auth/index';
 
 @Injectable()
 export class FuseNavigationService
@@ -11,7 +14,7 @@ export class FuseNavigationService
     navigationModel: NavigationModel;
     flatNavigation: any[] = [];
 
-    constructor()
+    constructor( private auth: NbAuthService)
     {
         this.navigationModel = new NavigationModel();
         this.onNavigationModelChange.next(this.navigationModel.model);
@@ -186,5 +189,24 @@ export class FuseNavigationService
         }
 
         return this.flatNavigation;
+    }
+    hasRights(role: Array<string>):  Observable<boolean> {
+        let isInRole = false;
+        if(role==undefined || role.some(ro=>ro==CoreConfig.everyoneRole)){
+            return Observable.of(true);
+           
+        }else if(role.some(ro=>ro==CoreConfig.authenticatedRole)){
+           return  this.auth.isAuthenticated();
+            //.map(auth=>{
+              //  return auth;
+           // })
+        }else{
+           return this.auth._userRoles.map(userRoles => {
+
+                return userRoles.some(urole=>role.some(ro=>ro==urole));
+            });
+            
+        }
+        
     }
 }

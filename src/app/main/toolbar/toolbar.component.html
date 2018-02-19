@@ -28,7 +28,7 @@
             </div> -->
 
         </div>
-        <div xLayout="row"> <span fxFlex class="red-fg mat-body-2 pt-2"><p style="line-height: 0.7">Do prawidłowego działania systemu</p><p style="line-height: 0.8">wymagana jest przeglądarka w aktualnej wersji.</p> </span>  
+        <div *ngIf="!flexSupport" xLayout="row"> <span fxFlex class="red-fg mat-body-2 pt-2"><p style="line-height: 0.7">Do prawidłowego działania systemu</p><p style="line-height: 0.8">wymagana jest przeglądarka w aktualnej wersji.</p> </span>  
             <button fxFlex mat-button (click)="supportInfo()">Zobacz Szczegóły</button></div>
         <div class="" fxFlex="0 1 auto" fxLayout="row" fxLayoutAlign="start center">
 

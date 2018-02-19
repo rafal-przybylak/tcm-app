@@ -13,7 +13,8 @@ export class DateFormatPipe implements PipeTransform {
   transform(value: any, format?: string, timezone?: string, locale?: string): string | null {
     this.locale = this.translate.currentLang;
     this.format = 'lll';
-    return moment(value).lang(this.locale).format(this.format);
+   
+    return value==null || value==""?"":moment(value).lang(this.locale).format(this.format);
   }
 
 }

@@ -125,9 +125,10 @@ export class ExamService implements Resolve<T>
     }
 
     getObjects(): Promise<any> {
+        let x =this.dataService;
         return new Promise((resolve, reject) => {
             if (this.auth.isAdmin) {
-                this.dataService.find<T>({ include: 'course' })
+                this.dataService.find<T>()
                     .subscribe((response: T[]) => {
                         this.objects = response;
                         this.onObjectsChanged.next(this.objects);
@@ -135,7 +136,7 @@ export class ExamService implements Resolve<T>
                     }, reject);
             } else {
                 this.userApi.getCourses(this.loopbackApi.getCurrentUserId()).subscribe(datas => {
-                    this.dataService.find<T>({ include: 'course', where: { courseId: { inq: datas.map(o => o.id) } } })
+                    this.dataService.find<T>({  where: { courseId: { inq: datas.map(o => o.id) } } })
                         .subscribe((response: T[]) => {
                             this.objects = response;
                             this.onObjectsChanged.next(this.objects);

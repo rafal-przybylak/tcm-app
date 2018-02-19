@@ -1,9 +1,12 @@
 <mat-card class="dialog-confirm">
 	<mat-card-title *ngIf="title">{{title}}</mat-card-title>
-  <p [innerHTML]="message"></p>
+	<p [innerHTML]="message"></p>
+	<mat-form-field *ngIf="inputDataTitle!=null" class="w-400">
+		<textarea rows="3" matInput placeholder="{{inputDataTitle}}"  [(ngModel)]="inputDataValue"></textarea>
+	</mat-form-field>
 	<div class="actions">
-			<button mat-raised-button (click)="dialog.close()"  [attr.color]="'warn'">{{cancelButton}}</button>
-		<button mat-button (click)="dialog.close(true)">{{actionButton}}</button>
+			<button mat-raised-button *ngIf="cancelButton" (click)="dialog.close()"  [attr.color]="'warn'">{{cancelButton}}</button>
+			<button mat-button (click)="inputDataTitle?dialog.close({choice:true,value:inputDataValue}):dialog.close(true)">{{actionButton}}</button>
 	
 	</div>
 </mat-card>

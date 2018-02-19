@@ -5,8 +5,8 @@
 </a>
 <div class="children" [@slideInOut]="isOpen">
     <ng-container *ngFor="let item of item.children">
-        <fuse-nav-vertical-item *ngIf="item.type=='item'" [item]="item"></fuse-nav-vertical-item>
-        <fuse-nav-vertical-collapse *ngIf="item.type=='collapse'" [item]="item"></fuse-nav-vertical-collapse>
-        <fuse-nav-vertical-group *ngIf="item.type=='group'" [item]="item"></fuse-nav-vertical-group>
+        <fuse-nav-vertical-item *ngIf="item.type=='item' && (fuseNavigationService.hasRights(item.role) | async)" [item]="item"></fuse-nav-vertical-item>
+        <fuse-nav-vertical-collapse *ngIf="item.type=='collapse' && (fuseNavigationService.hasRights(item.role) | async)" [item]="item"></fuse-nav-vertical-collapse>
+        <fuse-nav-vertical-group *ngIf="item.type=='group' && (fuseNavigationService.hasRights(item.role) | async)" [item]="item"></fuse-nav-vertical-group>
     </ng-container>
 </div>

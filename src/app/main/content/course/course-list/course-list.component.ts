@@ -31,7 +31,7 @@ import { DialogService } from '../../../../core/services/dialog.service';
 export class CourseListComponent implements OnInit {
   public form: FormGroup;
   formErrors: any;
-  public courseModel: any = { "name": " ", "desc": " ", "startDt": new Date(), "endDt": new Date(), goelocLat: 0, goelocLong: 0, tags: " ", free: false };
+  public courseModel: any ={};// { "name": " ", "desc": " ", "startDt": new Date(), "endDt": new Date(), goelocLat: 0, goelocLong: 0, tags: " ", free: false };
   public sub: any;
   public courseFields: DynamicFormControlModel[];
   private modelDefinition: any = Course.getModelDefinition();
@@ -47,6 +47,7 @@ export class CourseListComponent implements OnInit {
       endDt: {},
       desc: {},
       free: {},
+      fundingEU: {},
       goelocLat: {},
       goelocLong: {}
     }
@@ -77,7 +78,11 @@ export class CourseListComponent implements OnInit {
       startDt: ['', Validators.required],
       endDt: ['', Validators.required],
       desc: ['', Validators.required],
-      free: ''
+      purpose: '',
+      agenda: '',
+      recipient: '',
+      free: '',
+      fundingEU:''
 
     });
     //this.form.patchValue(this.courseModel);
@@ -120,12 +125,12 @@ export class CourseListComponent implements OnInit {
     }
   }
 
-  setCourse(id: number) {
+  setCourse(event:Event, id: number) {
     this.courseModel = this.courses.find(x => x.id == id);
     //this.form.patchValue(this.courseModel);
     event.stopPropagation();
   }
-  deleteCourse(id: number) {
+  deleteCourse(event:Event,id: number) {
     let confirm = this.confirmService.confirm("Czy jesteś pewien?", "Usunięcie szkolenia spowoduje usunięcie wszystkich imformacji z nim zwiazanych!")
 
     confirm.afterClosed().subscribe(result => {

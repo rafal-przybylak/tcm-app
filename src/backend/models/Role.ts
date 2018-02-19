@@ -59,11 +59,14 @@ export class Role implements RoleInterface {
           type: 'number',
           title:''
           
+          
         },
         "name": {
           name: 'name',
           type: 'string',
           title:''
+          ,
+          required: true 
           
         },
         "description": {
@@ -71,17 +74,20 @@ export class Role implements RoleInterface {
           type: 'string',
           title:''
           
+          
         },
         "created": {
           name: 'created',
           type: 'Date',
           title:''
           
+          
         },
         "modified": {
           name: 'modified',
           type: 'Date',
           title:''
+          
           
         },
       },

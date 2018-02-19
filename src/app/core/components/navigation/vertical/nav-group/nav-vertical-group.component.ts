@@ -1,4 +1,5 @@
 import { Component, HostBinding, Input, OnInit } from '@angular/core';
+import { FuseNavigationService } from '../../navigation.service';
 
 @Component({
     selector   : 'fuse-nav-vertical-group',
@@ -10,7 +11,7 @@ export class FuseNavVerticalGroupComponent implements OnInit
     @HostBinding('class') classes = 'nav-group nav-item';
     @Input() item: any;
 
-    constructor()
+    constructor(private fuseNavigationService: FuseNavigationService)
     {
     }
 

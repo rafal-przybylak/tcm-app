@@ -60,23 +60,29 @@ export class UserCourse implements UserCourseInterface {
           type: 'number',
           title:''
           
+          
         },
         "userId": {
           name: 'userId',
           type: 'number',
           title:''
           
+          
         },
         "createdAt": {
           name: 'createdAt',
           type: 'Date',
           title:''
+          ,
+          required: true 
           
         },
         "updatedAt": {
           name: 'updatedAt',
           type: 'Date',
           title:''
+          ,
+          required: true 
           
         },
       },

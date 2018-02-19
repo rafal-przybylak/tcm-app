@@ -1,11 +1,15 @@
 @import "src/app/core/scss/fuse";
+.long-textarea{
+    min-width: 500px;
+}
 .card-image img{
     min-width: 100%;
 }
-#order {
+#course {
 
     .header {
-
+    height: 70px;
+    min-height: 70px;
         .subtitle {
             margin: 6px 0 0 0;
         }
@@ -30,7 +34,9 @@
                     cursor: pointer;
                 }
             }
-
+            .mat-card-actions{
+                margin: 0px;
+            }
             &.invoice {
 
                 #invoice {

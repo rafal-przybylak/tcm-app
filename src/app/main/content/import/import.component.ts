@@ -6,6 +6,10 @@ import 'rxjs/add/operator/catch';
 import { UserApi } from '../../../../backend/services/custom/User';
 import { UserDataApi, User } from '../../../../backend/index';
 declare var require: any;
+import * as XLSX from 'xlsx';
+import * as FileSaver from 'file-saver';
+import { error } from 'selenium-webdriver';
+//import * as XLSTOJS from 'xls-to-json-lc';
 @Component({
   selector: 'tcm-import',
   templateUrl: './import.component.html',
@@ -18,21 +22,31 @@ export class ImportComponent implements OnInit {
   ngOnInit() {
   }
   userImport(){
+    //const worksheet: XLSX.WorkBook = XLSX.utils.pa("../../../../../users.xls");
+  
+   
+    // excel2Json('../test/sample.xls', {
+    //     'convert_all_sheet': false,
+    //     'return_type': 'File',
+    //     'sheetName': 'survey'
+    // }, function(err, output) {
+     
+    // });
     this.getJSON().subscribe(data=>{
      data.forEach(element => {
        this.userApi.replaceOrCreate<User>({firstName:element.Imie,lastName:element.Nazwisko,passChangeRequired:true,
         username:this.removeDiacritics(element.Imie.toLowerCase()[0]+element.Nazwisko.toLowerCase().replace(/\s/g, "")),
-      email:element.email,emailVerified:false,password:element.Pesel}).subscribe(user=>{
+      email:element.mail,emailVerified:false,password:element.Pesel}).subscribe(user=>{
          this.userData.create({userId:user.id,education:element.wyksz,state:element.wojew,country:element.Kraj,community:element.Powiat,city:element.Miejscowość,
-          postalCode:element.Kodpocztowy,street:element.Ulica,streetNumber:element.Nrbudynku,localNumber:element.Nrlokalu,phone:element.Telefonkontaktowy,email:element.email,
+          postalCode:element.Kodpocztowy,street:element.Ulica,streetNumber:element.Nrbudynku,localNumber:element.Nrlokalu,phone:element.Telefonkontaktowy,email:element.mail,
           jobPosition:element.zawod,employer:element.pracodawca}).subscribe();
-       });
+       },error=>console.log(error));
      });
     })
 
   }
   public getJSON(): Observable<any> {
-    return this.http.get("../../../../assets/files/users.json")
+    return this.http.get("http://localhost:4200/tcm/assets/files/users.json")
                     .map((res:any) => res.json());
 }
 
@@ -130,4 +144,5 @@ private removeDiacritics (str) {
   }
   return str;
 }
+
 }

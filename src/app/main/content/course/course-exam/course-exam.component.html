@@ -1,0 +1,25 @@
+<div fxLayout="column"  class="h-100-p" fxLayoutAlign="space-between stretch" fxLayoutGap="8px">
+    <div fxFlex="50px" fxLayout="row" fxLayoutGap="8px" >
+        <button mat-raised-button color="primary" (click)="avaluate()" >Oceń pytania otwarte testu</button>
+        <button mat-raised-button *ngIf="auth.isAdmin" color="primary" (click)="avaluateUsers()" >Przelicz wyniki testu</button>
+    </div>
+<tcm-app-form fxFlex="1 1 200px" [ctrlAlign]="'center stretch'" [allowAddNew]=false [tcmRolesElement]="['administrator','trainer']" [objectName]="objectName" [formValue]="courseTest"
+    [formFields]="objectFields" (onSave)="save($event)" [viewMode]="viewMode">
+</tcm-app-form>
+<mat-tab-group fxFlex="auto" #tabb>
+    <mat-tab label="Testy uczestników" [disabled]="false">
+        <ng-template mat-tab-label>
+            <div fxLayout="row" fxLayoutGap="4px" fxLayoutAlign="center center">
+                <mat-icon fxFlex>assignment_turned_in</mat-icon>
+                <span fxFlex>Testy uczestników szkolenia</span>
+            </div>
+        </ng-template>
+        <div class="order-details tab-content p-24 h-100-p">
+            <app-list [loadRelations]="examUserDef" (onDelete)="deleteUserExam($event)" [modelDef]="userCourseExamDef" [data]="userCourseExamRows" [allowAddNew]="false" [allowEditDelete]="auth.isAdmin" >
+            </app-list>
+        </div>
+    </mat-tab>
+</mat-tab-group>
+</div>
+<!-- 
+(onRowActivate)="onUserActivate($event)" (goToAddNew)="addNewUser()" (onDelete)=onUserDelete($event) -->

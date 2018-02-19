@@ -1,12 +1,14 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 //import {AppService} from "../../../../backend/services/app";
-import {User} from "../../../../backend/models/User";
-import {UserApi} from "../../../../backend/services/custom/User";
-import {MatDialogRef} from "@angular/material";
-import {Role} from "../../../../backend/models/Role";
-import {RoleMapping} from "../../../../backend/models/RoleMapping";
-import {Subject} from "rxjs";
-import { RoleMappingInterface } from '../../../../backend/index';
+import { User } from "../../../../backend/models/User";
+import { UserApi } from "../../../../backend/services/custom/User";
+import { MatDialogRef } from "@angular/material";
+import { Role } from "../../../../backend/models/Role";
+import { RoleMapping } from "../../../../backend/models/RoleMapping";
+import { Subject, Observer } from "rxjs";
+import { RoleMappingInterface, RoleMappingApi, Course, CourseScope, TrainerCourseScope, CourseScopeApi } from '../../../../backend/index';
+import { Observable } from 'rxjs/Observable';
+import { forkJoin } from 'rxjs/observable/forkJoin';
 
 @Component({
   selector: 'app-user-form',
@@ -23,14 +25,16 @@ export class UserFormComponent implements OnInit {
   roles: Role[] = [];
   rolesAdd: Role[] = [];
   rolesRemove: Role[] = [];
-
+  trainerScopes: number[];
+  baseTrainerScopes: number[];
   public selectedModel: any;
-
+  public coursScoules$: Observable<CourseScope[]>;
 
   constructor(//private app: AppService,
-              public dialog: MatDialogRef<UserFormComponent>,
-              private userService: UserApi) {
-
+    public dialog: MatDialogRef<UserFormComponent>,
+    private userService: UserApi,
+    private roleMapApi: RoleMappingApi, private scoupeApi: CourseScopeApi) {
+    this.coursScoules$ = scoupeApi.find<CourseScope>();
   }
 
   ngOnInit() {
@@ -40,6 +44,10 @@ export class UserFormComponent implements OnInit {
       this.title = "Edycja użytkownika";
       this.action = "Aktualizuj";
       this.passwordRequired = false;
+      this.userService.getCourseScopes(this.model.id).subscribe(data => {
+        this.trainerScopes = data.map(x => x.id);
+        this.baseTrainerScopes=[...this.trainerScopes];
+      });
     }
 
 
@@ -87,13 +95,16 @@ export class UserFormComponent implements OnInit {
         this.selectedModel = null;
         this.model = response;
         this.saveUserRoles();
-
+        this.updateTrainerScoupe();
       });
 
     } else {
       this.userService.create(this.model).subscribe((user) => {
         this.dialog.close(user);
         this.selectedModel = null;
+        this.model=user;
+        this.addUserRoles();
+        this.createTrainerScoupe();
       }, err => {
         this.errorMessage = err.message;
       });
@@ -103,7 +114,23 @@ export class UserFormComponent implements OnInit {
 
 
   }
+  addUserRoles() {
+    if (this.rolesAdd && this.rolesAdd.length) {
+      this.rolesAdd.forEach((role) => {
+        
 
+        let data: RoleMappingInterface = {
+          principalType: "USER",
+          principalId: this.model.id.toString(),
+          roleId: role.id
+        };
+        this.roleMapApi.create(data).subscribe(res => {
+          console.log("role mapping created", res);
+        })
+      });
+
+    }
+  }
   saveUserRoles() {
 
 
@@ -116,8 +143,8 @@ export class UserFormComponent implements OnInit {
           principalId: this.model.id.toString(),
           roleId: role.id
         };
-        this.userService.linkRoles(this.model.id, role.id, data).subscribe(res => {
-          //console.log("role mapping created", res);
+        this.roleMapApi.create(data).subscribe(res => {
+          console.log("role mapping created", res);
         })
       });
 
@@ -136,9 +163,37 @@ export class UserFormComponent implements OnInit {
 
     this.dialog.close(this.model);
 
+   
 
   }
+  updateTrainerScoupe(){
+    let tasks$ = [];
+    
 
+    this.baseTrainerScopes.forEach(element => {
+       tasks$.push(this.userService.unlinkCourseScopes(this.model.id,element));
+    });
+    if(tasks$.length>0){
+      forkJoin(...tasks$).subscribe(results => {
+        this.trainerScopes.forEach(element => {
+          this.userService.linkCourseScopes(this.model.id,element).subscribe();  
+        });
+        
+      });
+    }else{
+      this.trainerScopes.forEach(element => {
+        this.userService.linkCourseScopes(this.model.id,element).subscribe();  
+      });
+    }
+   
+  }
+  createTrainerScoupe(){
+    let tasks$ = [];
+    this.trainerScopes.forEach(element => {
+       tasks$.push(this.userService.linkCourseScopes(this.model.id,element));
+    });
+    forkJoin(...tasks$).subscribe();
+  }
   updateRoles(role, event) {
 
     if (event.checked == true) {

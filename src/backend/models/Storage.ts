@@ -46,6 +46,7 @@ export class Storage implements StorageInterface {
           type: 'number',
           title:''
           
+          
         },
       },
       relations: {

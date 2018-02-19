@@ -1,36 +1,32 @@
 /* tslint:disable */
 import {
-  Course,
-  TestQuestion
+  TestQuestion,
+  CourseTest
 } from '../index';
 
 declare var Object: any;
 export interface TestInterface {
   "name": string;
   "desc"?: string;
-  "courseId": number;
-  "required": boolean;
-  "startDt": Date;
-  "expireDt": Date;
+  "maxScore"?: number;
   "id"?: number;
+  "deletedAt"?: Date;
   "createdAt": Date;
   "updatedAt": Date;
-  course?: Course;
   testQuestions?: TestQuestion[];
+  courseTests?: CourseTest[];
 }
 
 export class Test implements TestInterface {
   "name": string;
   "desc": string;
-  "courseId": number;
-  "required": boolean;
-  "startDt": Date;
-  "expireDt": Date;
+  "maxScore": number;
   "id": number;
+  "deletedAt": Date;
   "createdAt": Date;
   "updatedAt": Date;
-  course: Course;
   testQuestions: TestQuestion[];
+  courseTests: CourseTest[];
   constructor(data?: TestInterface) {
     Object.assign(this, data);
   }
@@ -69,6 +65,8 @@ export class Test implements TestInterface {
           name: 'name',
           type: 'string',
           title:'Nazwa'
+          ,
+          required: true 
           
         },
         "desc": {
@@ -76,30 +74,13 @@ export class Test implements TestInterface {
           type: 'string',
           title:'Opis'
           
+          
         },
-        "courseId": {
-          name: 'courseId',
+        "maxScore": {
+          name: 'maxScore',
           type: 'number',
-          title:''
+          title:'Maksymalna ilość punków'
           
-        },
-        "required": {
-          name: 'required',
-          type: 'boolean',
-          title:'Wymagany'
-          ,
-          default: true
-        },
-        "startDt": {
-          name: 'startDt',
-          type: 'Date',
-          title:'Data rozpoczęcia'
-          
-        },
-        "expireDt": {
-          name: 'expireDt',
-          type: 'Date',
-          title:'Data zakńczenia'
           
         },
         "id": {
@@ -107,33 +88,45 @@ export class Test implements TestInterface {
           type: 'number',
           title:''
           
+          
+        },
+        "deletedAt": {
+          name: 'deletedAt',
+          type: 'Date',
+          title:''
+          
+          
         },
         "createdAt": {
           name: 'createdAt',
           type: 'Date',
           title:''
+          ,
+          required: true 
           
         },
         "updatedAt": {
           name: 'updatedAt',
           type: 'Date',
           title:''
+          ,
+          required: true 
           
         },
       },
       relations: {
-        course: {
-          name: 'course',
-          type: 'Course',
-          model: 'Course',
-          relationType: 'belongsTo',
-                  keyFrom: 'courseId',
-          keyTo: 'id'
-        },
         testQuestions: {
           name: 'testQuestions',
           type: 'TestQuestion[]',
           model: 'TestQuestion',
+          relationType: 'hasMany',
+                  keyFrom: 'id',
+          keyTo: 'testId'
+        },
+        courseTests: {
+          name: 'courseTests',
+          type: 'CourseTest[]',
+          model: 'CourseTest',
           relationType: 'hasMany',
                   keyFrom: 'id',
           keyTo: 'testId'

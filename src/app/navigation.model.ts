@@ -7,7 +7,7 @@ export class NavigationModel {
                 'id': 'offer',
                 'title': 'Oferta szkoleniowa',
                 'type': 'group',
-                'role':'everyone',
+                'role':['everyone'],
                 'children': [
                     {
                         'id': 'course',
@@ -26,7 +26,7 @@ export class NavigationModel {
                 'id': 'offer',
                 'title': 'Szkolenia użytkownika',
                 'type': 'group',
-                'role':'authenticated',
+                'role':['authenticated'],
                 'children': [
                     {
                         'id': 'userCourse',
@@ -34,7 +34,17 @@ export class NavigationModel {
                         'type': 'item',
                         'icon': 'today',
                         'url': '/user-courses',
-                    },
+                    }
+                    // ,
+                    // {
+                    //     'id': 'userExam',
+                    //     'title': 'Testy',
+                    //     'type': 'item',
+                    //     'icon': 'assignment_turned_in',
+                    //     'url': '/user-exams'
+                       
+
+                    // }
                     // {
                     //     'id': 'courseData',
                     //     'title': 'Materiały',
@@ -47,21 +57,40 @@ export class NavigationModel {
                     //         'fg': '#FFFFFF'
                     //     }
                     // },
+                    ]
+            }, {
+                'id': 'courseSettings',
+                'title': 'Obsługa szkoleń',
+                'type': 'group',
+                'role':['administrator','trainer'],
+                'children': [
                     {
                         'id': 'exam',
-                        'title': 'Testy',
+                        'title': 'Definicje testów',
                         'type': 'item',
-                        'icon': 'email',
+                        'icon': 'assignment_turned_in',
+                        'role':['administrator'],
                         'url': '/exams'
                        
 
-                    }]
-            }, {
+                    }
+                    ,
+                    {
+                        'id': 'courseExam',
+                        'title': 'Testy szkoleń',
+                        'type': 'item',
+                        'icon': 'assignment_turned_in',
+                        'url': '/course-exams'
+
+                    }
+                ]
+            },{
                 'id': 'settings',
                 'title': 'Ustawienia',
                 'type': 'group',
-                'role':'administrator',
+                'role':['administrator'],
                 'children': [
+                    
                     {
                         'id': 'user',
                         'title': 'Użytkownicy',
@@ -75,7 +104,7 @@ export class NavigationModel {
                 'id': 'import',
                 'title': 'Import',
                 'type': 'item',
-                'role':'administrator',
+                'role':['administrator'],
                 'url': '/import'
             }
         ];

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, TemplateRef, Pipe, PipeTransform } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef, Pipe, PipeTransform, Input, Output, EventEmitter } from '@angular/core';
 import { Test, TestApi, TestQuestion, TestQuestionApi } from '../../../../../backend/index';
 import { Router } from '@angular/router';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
@@ -22,25 +22,36 @@ export class ExamsComponent implements OnInit {
   public allowEdit: boolean = false;
   public rows = [];
   public modelDef: any;
+  @Input() public chooseMode: boolean = false;
+  @Output() public onChoose = new EventEmitter<any>();
+  private subscribe: boolean = true;
   constructor(private testApi: TestApi, private questApi: TestQuestionApi, private confirmService: DialogService, private auth: NbAuthService, private router: Router, private data: ExamService, private translate: TranslateService) {
     this.modelDef = Test.getModelDefinition();
-    this.data.onObjectsChanged.subscribe(data => {
+    this.data.onObjectsChanged.takeWhile(()=>this.subscribe).subscribe(data => {
 
-    
+
       this.rows = data;
     });
+   
     this.allowEdit = this.auth.isAdmin;
-    this.auth.isAdmin$.subscribe(val => this.allowEdit = val);
+    this.auth.isAdmin$.takeWhile(()=>this.subscribe).subscribe(val => this.allowEdit = val);
+    
   }
 
   ngOnInit() {
-
+    if(this.chooseMode){
+      this.testApi.find().takeWhile(()=>this.subscribe).subscribe(data=>{
+        this.rows=data;
+      } );
+    }
   }
-  
+  public ngOnDestroy() {
+    this.subscribe = false;
+  }
 
   onActivate(event) {
-    if (event.type == "dblclick")
-      this.router.navigate(["/exams/" + event.row.id + "/view"])
+    if (event.type == "dblclick" && !this.chooseMode)
+      this.router.navigate(["/exams/" + event.row.id + "/view",{preview:true}])
 
   }
   addNew() {
@@ -56,7 +67,7 @@ export class ExamsComponent implements OnInit {
       if (result) {
         let tasks$ = [];
         data.forEach(test => {
-         
+
           tasks$.push(this.data.removeObject(test));
         });
         forkJoin(...tasks$).subscribe(results => {
@@ -65,6 +76,9 @@ export class ExamsComponent implements OnInit {
       }
     })
 
+  }
+  choose(data) {
+    this.onChoose.next(data);
   }
 }
 

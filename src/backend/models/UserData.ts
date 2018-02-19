@@ -27,6 +27,7 @@ export interface UserDataInterface {
   "employerLocalNumber"?: string;
   "workPhone"?: string;
   "id"?: number;
+  "deletedAt"?: Date;
   "createdAt": Date;
   "updatedAt": Date;
   user?: User;
@@ -55,6 +56,7 @@ export class UserData implements UserDataInterface {
   "employerLocalNumber": string;
   "workPhone": string;
   "id": number;
+  "deletedAt": Date;
   "createdAt": Date;
   "updatedAt": Date;
   user: User;
@@ -96,6 +98,8 @@ export class UserData implements UserDataInterface {
           name: 'userId',
           type: 'number',
           title:''
+          ,
+          required: true 
           
         },
         "tin": {
@@ -103,11 +107,13 @@ export class UserData implements UserDataInterface {
           type: 'string',
           title:'Pesel'
           
+          
         },
         "education": {
           name: 'education',
           type: 'string',
           title:'Wykształcenie'
+          
           
         },
         "state": {
@@ -115,11 +121,13 @@ export class UserData implements UserDataInterface {
           type: 'string',
           title:'Województwo'
           
+          
         },
         "country": {
           name: 'country',
           type: 'string',
           title:'Kraj'
+          
           
         },
         "community": {
@@ -127,11 +135,13 @@ export class UserData implements UserDataInterface {
           type: 'string',
           title:'Powiat'
           
+          
         },
         "city": {
           name: 'city',
           type: 'string',
           title:'Miasto'
+          
           
         },
         "postalCode": {
@@ -139,11 +149,13 @@ export class UserData implements UserDataInterface {
           type: 'string',
           title:'Kod pocztowy'
           
+          
         },
         "street": {
           name: 'street',
           type: 'string',
           title:'Ulica'
+          
           
         },
         "streetNumber": {
@@ -151,11 +163,13 @@ export class UserData implements UserDataInterface {
           type: 'string',
           title:'Numer'
           
+          
         },
         "localNumber": {
           name: 'localNumber',
           type: 'string',
           title:'Numer lokalu'
+          
           
         },
         "phone": {
@@ -163,11 +177,13 @@ export class UserData implements UserDataInterface {
           type: 'string',
           title:'Nr. telefonu'
           
+          
         },
         "email": {
           name: 'email',
           type: 'string',
           title:'Email'
+          
           
         },
         "jobPosition": {
@@ -175,11 +191,13 @@ export class UserData implements UserDataInterface {
           type: 'string',
           title:'Stanowisko'
           
+          
         },
         "employer": {
           name: 'employer',
           type: 'string',
           title:'Pracodawca'
+          
           
         },
         "employerSity": {
@@ -187,11 +205,13 @@ export class UserData implements UserDataInterface {
           type: 'string',
           title:'Miasto pracodawcy'
           
+          
         },
         "employerPostalCode": {
           name: 'employerPostalCode',
           type: 'string',
           title:'Kod pocztowy pracodawczy'
+          
           
         },
         "employerStreet": {
@@ -199,11 +219,13 @@ export class UserData implements UserDataInterface {
           type: 'string',
           title:'Ulica pracodawcy'
           
+          
         },
         "employerStreetNumber": {
           name: 'employerStreetNumber',
           type: 'string',
           title:'Numer ulicy pracodawcy'
+          
           
         },
         "employerLocalNumber": {
@@ -211,11 +233,13 @@ export class UserData implements UserDataInterface {
           type: 'string',
           title:'Numer lokalu pracodawcy'
           
+          
         },
         "workPhone": {
           name: 'workPhone',
           type: 'string',
           title:'Telefon slużbowy'
+          
           
         },
         "id": {
@@ -223,17 +247,29 @@ export class UserData implements UserDataInterface {
           type: 'number',
           title:''
           
+          
+        },
+        "deletedAt": {
+          name: 'deletedAt',
+          type: 'Date',
+          title:''
+          
+          
         },
         "createdAt": {
           name: 'createdAt',
           type: 'Date',
           title:''
+          ,
+          required: true 
           
         },
         "updatedAt": {
           name: 'updatedAt',
           type: 'Date',
           title:''
+          ,
+          required: true 
           
         },
       },

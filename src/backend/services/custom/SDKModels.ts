@@ -13,6 +13,12 @@ import { UserAnswer } from '../../models/UserAnswer';
 import { Media } from '../../models/Media';
 import { MediaLink } from '../../models/MediaLink';
 import { Storage } from '../../models/Storage';
+import { CourseScope } from '../../models/CourseScope';
+import { CourseTest } from '../../models/CourseTest';
+import { UserCourseTest } from '../../models/UserCourseTest';
+import { TrainerCourse } from '../../models/TrainerCourse';
+import { TrainerCourseScope } from '../../models/TrainerCourseScope';
+import { CourseCandidate } from '../../models/CourseCandidate';
 
 export interface Models { [name: string]: any }
 
@@ -33,6 +39,12 @@ export class SDKModels {
     Media: Media,
     MediaLink: MediaLink,
     Storage: Storage,
+    CourseScope: CourseScope,
+    CourseTest: CourseTest,
+    UserCourseTest: UserCourseTest,
+    TrainerCourse: TrainerCourse,
+    TrainerCourseScope: TrainerCourseScope,
+    CourseCandidate: CourseCandidate,
     
   };
 

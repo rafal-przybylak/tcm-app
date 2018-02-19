@@ -24,6 +24,7 @@ export class FuseToolbarComponent {
     provider: string = '';
     isAuth: boolean = false;
     public userName: string;
+    flexSupport: boolean;
     constructor( private dioalogServ:DialogService,
         @Inject(NB_AUTH_OPTIONS_TOKEN) protected config = {},
         protected service: NbAuthService,
@@ -32,6 +33,7 @@ export class FuseToolbarComponent {
         private translate: TranslateService,
         private loopBackAuth: LoopBackAuth
     ) {
+        this.flexSupport= document.createElement('p').style.flex=="";
         this.service.isAuthenticated().subscribe(auth => {
             this.isAuth = auth;
             if(auth)

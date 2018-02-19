@@ -10,6 +10,8 @@ export class ConfirmDialogComponent implements OnInit {
 
 	public title: string;
 	public message: string;
+	public inputDataTitle: string;
+	public inputDataValue: string;
 	public actionButton: string;
 	public cancelButton: string;
 	constructor(public dialog: MatDialogRef<ConfirmDialogComponent>) {

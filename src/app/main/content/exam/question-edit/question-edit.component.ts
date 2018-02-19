@@ -1,8 +1,8 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { TestQuestion, TestQuestionApi, Test } from '../../../../../backend/index';
+import { TestQuestion, TestQuestionApi, Test, Course, CourseScope, CourseScopeApi } from '../../../../../backend/index';
 import { ControlGeneratorService } from '../../../app-form/control-generator.service';
 import { FormGroup, FormControl } from '@angular/forms';
-import { DynamicFormService, DynamicSelectModel, DynamicCheckboxGroupModel, DynamicFormValueControlModel } from '@ng-dynamic-forms/core';
+import { DynamicFormService, DynamicSelectModel, DynamicCheckboxGroupModel, DynamicFormValueControlModel, DynamicFormOption } from '@ng-dynamic-forms/core';
 import { AbstractControl } from '@angular/forms/src/model';
 import { ExamConfig } from '../../../services/exam-generator/exam-config';
 import { QuillEditorComponent } from 'ngx-quill/src/quill-editor.component';
@@ -37,13 +37,19 @@ export class QuestionEditComponent implements OnInit {
   objectName:string=TestQuestion.getModelDefinition().title.split("|")[0];
   objectModel:TestQuestion=new TestQuestion();
   objectFields:any;
+  courseScopeOptions:any[];
   public formGroup: FormGroup;
   @Input() public tesetId:number;
   @Output() public onSave = new EventEmitter<any>();
-  constructor(private formServ: DynamicFormService,private formService: ControlGeneratorService, private testQuestApi: TestQuestionApi ) {
+  constructor(private formServ: DynamicFormService,private formService: ControlGeneratorService, private testQuestApi: TestQuestionApi ,private scopeApi:CourseScopeApi) {
     let dynamicFields=Object.assign({},TestQuestion.getModelDefinition());
     delete dynamicFields.properties.category
     delete dynamicFields.properties.content;
+    delete dynamicFields.properties.testId;
+    delete dynamicFields.properties.courseScopeId;
+    scopeApi.find<CourseScope>().subscribe(data=>{
+      this.courseScopeOptions=data.map(o=>  ({label:o.name,value:o.id}))
+    },error=>console.log(error));
     this.objectFields = this.formService.getFormControlModel(dynamicFields);
     this.objectFields.push(new DynamicSelectModel({
       id: "ctlType",
@@ -52,15 +58,22 @@ export class QuestionEditComponent implements OnInit {
       hint: "Określ rodzaj kontrolki dla pytania",
       options:ExamConfig.ControlOptions
     }));
+    // this.objectFields.push(new DynamicSelectModel({
+    //   id: "category",
+    //   placeholder:"Kategoria",
+    //   required: true,  
+    //   hint: "Określ kategorię pytania",
+    //   multiple:true,
+    //   options:ExamConfig.QuestionCategory
+    // }));
     this.objectFields.push(new DynamicSelectModel({
-      id: "category",
-      placeholder:"Kategoria",
-      required: true,  
-      hint: "Określ kategorię pytania",
-      multiple:true,
-      options:ExamConfig.QuestionCategory
+      id: "courseScopeId",
+      placeholder:"Zakres",
+      required: false,  
+      hint: "Określ zakres pytania",
+      options: scopeApi.find<CourseScope>().map(data=>{return data.map(x=> { return {label:x.name,value:x.id}})})
+      
     }));
-    
    
   }
 

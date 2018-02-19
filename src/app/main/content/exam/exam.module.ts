@@ -18,6 +18,7 @@ import { QuestionEditComponent } from './question-edit/question-edit.component';
 import { DynamicFormsCoreModule } from "@ng-dynamic-forms/core";
 import { DynamicFormsMaterialUIModule } from "@ng-dynamic-forms/ui-material";
 import { QuillModule } from 'ngx-quill';
+import { CourseExamService } from './course-exam.service';
 // const routes = [
 //   {
 //     path: '',
@@ -53,7 +54,7 @@ import { QuillModule } from 'ngx-quill';
   ],
   declarations: [ExamComponent, ExamsComponent, ExamViewerComponent,QuestionEditComponent],
   exports: [ExamComponent],
-  providers: [ControlGeneratorService, ExamService,ExamGeneratorService],
+  providers: [ControlGeneratorService, ExamService,ExamGeneratorService,CourseExamService],
   entryComponents:[AppFormComponent,QuestionEditComponent]
 })
 export class ExamModule { }

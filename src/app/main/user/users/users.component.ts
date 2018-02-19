@@ -110,6 +110,7 @@ export class UsersComponent implements OnInit {
 
         
         let dialogRef = this.dialog.open(UserFormComponent, {width: '500px'});
+        dialogRef.componentInstance['roles'] = this.roles;
         dialogRef.afterClosed().subscribe((item: any) => {
             if (item) {
                 this.models.push(item);
@@ -139,7 +140,16 @@ export class UsersComponent implements OnInit {
                 this.models = this.models.concat(res);
             });
         } else {
-            if (this.modelCounts > event.size) {
+            if (this.modelCounts > event.size*(event.size-1)) {
+                this.currentPage = event.page;
+                this.filter.limit = event.size;
+                this.filter.skip = event.size * (event.page - 1);
+
+                this.userService.find(this.filter).subscribe(data => {
+                    this.models = data;
+                });
+            }
+            else{
                 this.currentPage = 1;
                 this.filter.limit = event.size;
                 this.filter.skip = 0;

@@ -97,7 +97,7 @@ export class MediaLinkApi extends BaseLoopBackApi {
   }
 
   /**
-   * Fetches belongsTo relation node.
+   * Fetches belongsTo relation courseFiles.
    *
    * @param {any} id mediaLink id
    *
@@ -112,10 +112,10 @@ export class MediaLinkApi extends BaseLoopBackApi {
    * This usually means the response is a `MediaLink` object.)
    * </em>
    */
-  public getNode(id: any, refresh: any = {}, customHeaders?: Function): Observable<any> {
+  public getCourseFiles(id: any, refresh: any = {}, customHeaders?: Function): Observable<any> {
     let _method: string = "GET";
     let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
-    "/mediaLinks/:id/node";
+    "/mediaLinks/:id/courseFiles";
     let _routeParams: any = {
       id: id
     };

@@ -26,7 +26,7 @@ export class MediaDialogComponent implements OnInit {
     notifyMessage: string;
     uploadErrorMessage: string;
     selectedTabIndex: number = 0;
-    libraryLoadMoreButton: string = "Load more";
+    libraryLoadMoreButton: string = "Załaduj kolejne pliki";
 
     tabLibraryActive: boolean = false;
     imageFileTypes: string[] = [
@@ -64,7 +64,7 @@ export class MediaDialogComponent implements OnInit {
         if (this.acceptedFiles) {
             this.config.acceptedFiles = this.acceptedFiles;
             let fileTypes: string[] = this.acceptedFiles.split(',');
-            console.log(fileTypes);
+           
             let whereOr = [];
             this.filter.where = {and: []};
             if (fileTypes.length) {
@@ -100,7 +100,7 @@ export class MediaDialogComponent implements OnInit {
     }
 
     onUploadError(event: any) {
-        this.uploadErrorMessage = "An error uploading your file.";
+        this.uploadErrorMessage = "Błąd podczas pobierania pliku.";
     }
 
     onTabChange(event: any) {
@@ -116,13 +116,13 @@ export class MediaDialogComponent implements OnInit {
 
     loadMediaLibrary() {
 
-        this.libraryLoadMoreButton = "Loading...";
+        this.libraryLoadMoreButton = "Ładowanie...";
         let userId = this.auth.getCurrentUserId();
 
         this.userService.getMedia(userId, this.filter).subscribe(media => {
-            this.libraryLoadMoreButton = "Load more";
+            this.libraryLoadMoreButton = "Załaduj kolejne pliki";
             if (!media || media.length == 0) {
-                this.libraryLoadMoreButton = "You're reached end of the list.";
+                this.libraryLoadMoreButton = "Koniec załączników";
             }
             if (this.library.length) {
 
@@ -169,14 +169,14 @@ export class MediaDialogComponent implements OnInit {
             if (this.selectLimit > this.selectedMedia.length) {
                 this.selectedMedia.push(item);
             } else {
-                this.notifyMessage = "Only allow select maximum " + this.selectLimit;
+                this.notifyMessage = "Możesz wybrać tylko " + this.selectLimit+ " zdjęć.";
             }
 
         }
     }
 
     loadMoreLibrary() {
-        this.libraryLoadMoreButton = "Loading...";
+        this.libraryLoadMoreButton = "Ładowanie...";
 
         this.filter.skip = this.filter.skip + this.filter.limit;
         this.loadMediaLibrary();

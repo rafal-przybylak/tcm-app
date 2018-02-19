@@ -30,7 +30,7 @@
         </button>
     </ng-container>
 
-    <form *ngIf="formGroup" fxFlex="auto" [formGroup]="formGroup" fxLayoutAlign="start" fxLayout="column">
+    <form *ngIf="formGroup" fxFlex="auto" [formGroup]="formGroup" fxLayoutAlign="start stretch" fxLayout="column">
 
         <!-- <dynamic-material-form-control *ngFor="let controlModel of formFields" [group]="formGroup"  fxLayoutAlign="center top"  fxLayoutGap="10px" [model]="controlModel">
 
@@ -92,7 +92,7 @@
             
         </dynamic-material-form>
       
-        <button fxFlex="32px" mat-raised-button color="primary" type="submit" (click)="save()">Zapisz</button>
+        <button fxFlex="32px" mat-raised-button color="accent" *ngIf="!viewMode" type="submit" (click)="save()">{{saveButtonLabal}}</button>
     </form>
     <!-- <form [formGroup]="form" (ngSubmit)="save(formModel)">
         <formly-form [model]="formModel" [fields]="formFields">

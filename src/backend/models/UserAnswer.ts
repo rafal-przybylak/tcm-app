@@ -1,30 +1,45 @@
 /* tslint:disable */
 import {
   User,
-  TestQuestion
+  TestQuestion,
+  UserCourseTest
 } from '../index';
 
 declare var Object: any;
 export interface UserAnswerInterface {
-  "userId": number;
+  "userCourseTestId": number;
   "questionId": number;
+  "questContent"?: string;
   "value"?: Array<string>;
+  "answerDt"?: Date;
+  "evaluationDt"?: Date;
+  "trainerId"?: number;
+  "score"?: number;
   "id"?: number;
+  "deletedAt"?: Date;
   "createdAt": Date;
   "updatedAt": Date;
-  user?: User;
+  trainer?: User;
   question?: TestQuestion;
+  userCourseTest?: UserCourseTest;
 }
 
 export class UserAnswer implements UserAnswerInterface {
-  "userId": number;
+  "userCourseTestId": number;
   "questionId": number;
+  "questContent": string;
   "value": Array<string>;
+  "answerDt": Date;
+  "evaluationDt": Date;
+  "trainerId": number;
+  "score": number;
   "id": number;
+  "deletedAt": Date;
   "createdAt": Date;
   "updatedAt": Date;
-  user: User;
+  trainer: User;
   question: TestQuestion;
+  userCourseTest: UserCourseTest;
   constructor(data?: UserAnswerInterface) {
     Object.assign(this, data);
   }
@@ -59,22 +74,62 @@ export class UserAnswer implements UserAnswerInterface {
       path: 'UserAnswers',
       idName: 'id',
       properties: {
-        "userId": {
-          name: 'userId',
+        "userCourseTestId": {
+          name: 'userCourseTestId',
           type: 'number',
-          title:''
+          title:'Test uczestnika'
+          ,
+          required: true 
           
         },
         "questionId": {
           name: 'questionId',
           type: 'number',
-          title:''
+          title:'Pytanie'
+          ,
+          required: true 
+          
+        },
+        "questContent": {
+          name: 'questContent',
+          type: 'string',
+          title:'Treść pytania'
+          
           
         },
         "value": {
           name: 'value',
           type: 'Array<string>',
-          title:''
+          title:'Odpowiedź'
+          
+          
+        },
+        "answerDt": {
+          name: 'answerDt',
+          type: 'Date',
+          title:'Data oceny'
+          
+          
+        },
+        "evaluationDt": {
+          name: 'evaluationDt',
+          type: 'Date',
+          title:'Data oceny'
+          
+          
+        },
+        "trainerId": {
+          name: 'trainerId',
+          type: 'number',
+          title:'Trener oceniający'
+          
+          
+        },
+        "score": {
+          name: 'score',
+          type: 'number',
+          title:'Uzyskana ilość punków'
+          
           
         },
         "id": {
@@ -82,27 +137,39 @@ export class UserAnswer implements UserAnswerInterface {
           type: 'number',
           title:''
           
+          
+        },
+        "deletedAt": {
+          name: 'deletedAt',
+          type: 'Date',
+          title:''
+          
+          
         },
         "createdAt": {
           name: 'createdAt',
           type: 'Date',
           title:''
+          ,
+          required: true 
           
         },
         "updatedAt": {
           name: 'updatedAt',
           type: 'Date',
           title:''
+          ,
+          required: true 
           
         },
       },
       relations: {
-        user: {
-          name: 'user',
+        trainer: {
+          name: 'trainer',
           type: 'User',
           model: 'User',
           relationType: 'belongsTo',
-                  keyFrom: 'userId',
+                  keyFrom: 'trainerId',
           keyTo: 'id'
         },
         question: {
@@ -111,6 +178,14 @@ export class UserAnswer implements UserAnswerInterface {
           model: 'TestQuestion',
           relationType: 'belongsTo',
                   keyFrom: 'questionId',
+          keyTo: 'id'
+        },
+        userCourseTest: {
+          name: 'userCourseTest',
+          type: 'UserCourseTest',
+          model: 'UserCourseTest',
+          relationType: 'belongsTo',
+                  keyFrom: 'userCourseTestId',
           keyTo: 'id'
         },
       }

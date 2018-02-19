@@ -5,7 +5,10 @@ import {
   UserData,
   UserAnswer,
   Media,
-  MediaLink
+  MediaLink,
+  UserCourseTest,
+  CourseScope,
+  CourseCandidate
 } from '../index';
 
 declare var Object: any;
@@ -23,9 +26,13 @@ export interface UserInterface {
   roles?: Role[];
   courses?: Course[];
   userData?: UserData;
-  userAnswers?: UserAnswer[];
+  evaluatedUserAnswers?: UserAnswer[];
   media?: Media[];
   avatar?: MediaLink;
+  userCourseTests?: UserCourseTest[];
+  trainingCourses?: Course[];
+  courseScopes?: CourseScope[];
+  courseApplications?: CourseCandidate[];
 }
 
 export class User implements UserInterface {
@@ -42,9 +49,13 @@ export class User implements UserInterface {
   roles: Role[];
   courses: Course[];
   userData: UserData;
-  userAnswers: UserAnswer[];
+  evaluatedUserAnswers: UserAnswer[];
   media: Media[];
   avatar: MediaLink;
+  userCourseTests: UserCourseTest[];
+  trainingCourses: Course[];
+  courseScopes: CourseScope[];
+  courseApplications: CourseCandidate[];
   constructor(data?: UserInterface) {
     Object.assign(this, data);
   }
@@ -84,11 +95,13 @@ export class User implements UserInterface {
           type: 'string',
           title:'Imię'
           
+          
         },
         "lastName": {
           name: 'lastName',
           type: 'string',
           title:'Nazwisko'
+          
           
         },
         "passChangeRequired": {
@@ -96,11 +109,13 @@ export class User implements UserInterface {
           type: 'boolean',
           title:'Wymagna zmiana hasła'
           
+          
         },
         "realm": {
           name: 'realm',
           type: 'string',
           title:''
+          
           
         },
         "username": {
@@ -108,11 +123,14 @@ export class User implements UserInterface {
           type: 'string',
           title:''
           
+          
         },
         "email": {
           name: 'email',
           type: 'string',
-          title:'E-mail'
+          title:''
+          ,
+          required: true 
           
         },
         "emailVerified": {
@@ -120,17 +138,20 @@ export class User implements UserInterface {
           type: 'boolean',
           title:''
           
+          
         },
         "id": {
           name: 'id',
           type: 'number',
           title:''
           
+          
         },
         "password": {
           name: 'password',
           type: 'string',
           title:''
+          
           
         },
       },
@@ -171,13 +192,13 @@ export class User implements UserInterface {
                   keyFrom: 'id',
           keyTo: 'userId'
         },
-        userAnswers: {
-          name: 'userAnswers',
+        evaluatedUserAnswers: {
+          name: 'evaluatedUserAnswers',
           type: 'UserAnswer[]',
           model: 'UserAnswer',
           relationType: 'hasMany',
                   keyFrom: 'id',
-          keyTo: 'userId'
+          keyTo: 'trainerId'
         },
         media: {
           name: 'media',
@@ -194,6 +215,42 @@ export class User implements UserInterface {
           relationType: 'hasOne',
                   keyFrom: 'id',
           keyTo: 'refId'
+        },
+        userCourseTests: {
+          name: 'userCourseTests',
+          type: 'UserCourseTest[]',
+          model: 'UserCourseTest',
+          relationType: 'hasMany',
+                  keyFrom: 'id',
+          keyTo: 'userId'
+        },
+        trainingCourses: {
+          name: 'trainingCourses',
+          type: 'Course[]',
+          model: 'Course',
+          relationType: 'hasMany',
+          modelThrough: 'TrainerCourse',
+          keyThrough: 'courseId',
+          keyFrom: 'id',
+          keyTo: 'userId'
+        },
+        courseScopes: {
+          name: 'courseScopes',
+          type: 'CourseScope[]',
+          model: 'CourseScope',
+          relationType: 'hasMany',
+          modelThrough: 'TrainerCourseScope',
+          keyThrough: 'courseScopeId',
+          keyFrom: 'id',
+          keyTo: 'trainerId'
+        },
+        courseApplications: {
+          name: 'courseApplications',
+          type: 'CourseCandidate[]',
+          model: 'CourseCandidate',
+          relationType: 'hasMany',
+                  keyFrom: 'id',
+          keyTo: 'userId'
         },
       }
     }

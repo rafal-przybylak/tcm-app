@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { TestQuestion, TestQuestionApi, Test, TestApi } from '../../../../../backend/index';
+import { TestQuestion, TestQuestionApi, Test, TestApi, Course, CourseScope } from '../../../../../backend/index';
 import { Router } from '@angular/router';
 import { ControlGeneratorService } from '../../../app-form/control-generator.service';
 import { DynamicFormControlModel, DynamicSelectModel } from '@ng-dynamic-forms/core';
@@ -24,9 +24,9 @@ export class ExamComponent implements OnInit {
   public object: Test;
   public objectName: string = this.modelDefinition.title.split("|")[0];
   public questionDef: any = TestQuestion.getModelDefinition();
+  public scopeDef:any=CourseScope.getModelDefinition();
   public questionRows: any[];
   public isNew: boolean = true;
-  @Input() public courseId: number;
   @Input() public popupMode: boolean = false;
   @Output() public onSave = new EventEmitter<any>();
   @Input() public id: number;
@@ -41,7 +41,7 @@ export class ExamComponent implements OnInit {
     this.objectModel = this.data.object;
 
     if (this.data.routeParams.id != 0) {
-      this.testApi.getTestQuestions(this.data.routeParams.id).subscribe(data => {
+      this.testApi.getTestQuestions(this.data.routeParams.id,{include:"courseScope"}).subscribe(data => {
         this.questionRows = data;
       });
       this.isNew = false;
@@ -58,7 +58,6 @@ export class ExamComponent implements OnInit {
       });
     }
     else {
-      data.courseId = this.courseId;
       this.data.addObject(data).then(sData => {
         if (!this.popupMode)
           this.router.navigate(["/exams"]);

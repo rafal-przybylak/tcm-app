@@ -3,7 +3,7 @@
     <div *ngIf="errorMessage" class="l-pad-top-1 l-pad-bottom-1 alert is-critical">{{errorMessage}}</div>
     <smd-datatable [models]="models" [paginated]="true" [paginatorRanges]="[25, 50, 100]" [counts]="modelCounts" (pageChange)="onPageChange($event)">
 
-      <smd-datatable-header [enableFilter]="true" filterLabel="Search...">
+      <smd-datatable-header [enableFilter]="true" filterLabel="Znajdź...">
         <smd-datatable-action-button (onClick)="addItem($event)" label="Add" icon="add"></smd-datatable-action-button>
 
         <smd-datatable-contextual-button (onClick)="editItem($event)" icon="edit" [minimunSelected]="1" [maxSelected]="1" mdTooltip="Edycja"></smd-datatable-contextual-button>

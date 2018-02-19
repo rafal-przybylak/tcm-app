@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { NbAuthService } from '../../auth/index';
 import { Subscriber } from 'rxjs/Subscriber';
 import { CoreConfig } from '../../api.config';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
     selector: 'fuse-navigation',
@@ -28,21 +29,6 @@ export class FuseNavigationComponent implements OnDestroy {
     ngOnDestroy() {
         this.navigationModelChangeSubscription.unsubscribe();
     }
-    hasRights(role: string): boolean {
-        let isInRole = false;
-        if(role==undefined || role==CoreConfig.everyoneRole){
-            isInRole=true;
-        }else if(role==CoreConfig.authenticatedRole){
-            this.auth.isAuthenticated().subscribe(auth=>{
-                isInRole=auth;
-            })
-        }else{
-            this.auth._userRoles.subscribe(userRoles => {
-                isInRole = userRoles.includes(role);
-            });
-            
-        }
-        return isInRole;
-    }
+    
 
 }

@@ -23,6 +23,8 @@ export class AppFormComponent implements OnInit {
   @Input() public fieldsObservable: Observable<ExamControlsAndValues>;
   @Input() public layout: string = "row wrap";
   @Input() public ctrlAlign :string= "space-between stretch";
+  @Input() public viewMode:boolean=false;
+  @Input() public saveButtonLabal: string = "Zapisz";
   public formGroup: FormGroup;
 
   constructor(private formService: DynamicFormService) {
@@ -31,34 +33,35 @@ export class AppFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.fieldsObservable != undefined) {
-      this.fieldsObservable.subscribe(data => {
-        this.formFields = data.controls;
+    // if (this.fieldsObservable != undefined) {
+    //   this.fieldsObservable.subscribe(data => {
+    //     this.formFields = data.controls;
 
-        this.formFields.forEach(element => {
-          this.formValue[element.id] = data.values[element.id];
+    //     this.formFields.forEach(element => {
+    //       this.formValue[element.id] = data.values[element.id];
 
-          let control = this.formService.findById(element.id, this.formFields);
-          console.log(control.type.indexOf("CHECKBOX_GROUP"));
-          if (control.type.indexOf("CHECKBOX_GROUP") > -1) {
-            (control as DynamicCheckboxGroupModel).group.forEach(ctrl => {
-              (ctrl as DynamicFormValueControlModel<string | string[] | number | boolean | Date>).valueUpdates.subscribe(value => {
-                this.formValue[element.id] = value ? this.addToArray(this.formValue[element.id], ctrl.id) : this.removeFromArray(this.formValue[element.id], ctrl.id);
-              });
-            });
-          }
-          else {
-            (control as DynamicFormValueControlModel<string | string[] | number | boolean | Date>).valueUpdates.subscribe(value => this.formValue[element.id] = value);
-          }
-        });
-        this.formGroup = this.formService.createFormGroup(this.formFields);
-        this.objectName = "";
-      })
-    }
+    //       let control = this.formService.findById(element.id, this.formFields);
+    //       console.log(control.type.indexOf("CHECKBOX_GROUP"));
+    //       if (control.type.indexOf("CHECKBOX_GROUP") > -1) {
+    //         (control as DynamicCheckboxGroupModel).group.forEach(ctrl => {
+    //           (ctrl as DynamicFormValueControlModel<string | string[] | number | boolean | Date>).valueUpdates.subscribe(value => {
+    //             this.formValue[element.id] = value ? this.addToArray(this.formValue[element.id], ctrl.id) : this.removeFromArray(this.formValue[element.id], ctrl.id);
+    //           });
+    //         });
+    //       }
+    //       else {
+    //         (control as DynamicFormValueControlModel<string | string[] | number | boolean | Date>).valueUpdates.subscribe(value => this.formValue[element.id] = value);
+    //       }
+    //     });
+    //     this.formGroup = this.formService.createFormGroup(this.formFields);
+    //     this.objectName = "";
+    //   })
+    // }
     if (this.fieldsObservable == undefined) {
       this.formFields.forEach(element => {
 
         let control = this.formService.findById(element.id, this.formFields);
+        if(this.viewMode) control.disabled=true;// .disabledUpdates.next(true);
         if (control.type.indexOf("CHECKBOX_GROUP") > -1) {
           (control as DynamicCheckboxGroupModel).group.forEach(ctrl => {
             if (this.formValue != null && this.formValue[element.id] != null) {

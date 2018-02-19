@@ -28,7 +28,7 @@ export class ControlGeneratorService {
                 new DynamicInputModel({
                   id: propName,
                   placeholder: modelDef.properties[propName].title,
-                  required: modelDef.properties[propName].required ? true : false,
+                  required: modelDef.properties[propName].required ? true : false
                 })
               );
             }

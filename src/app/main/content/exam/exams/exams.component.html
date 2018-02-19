@@ -1,7 +1,7 @@
 <div  id="e-commerce-dashboard" fxFlexFill fxLayout="column"    >
-<app-list fxFlexFill [loadRelations]="true"  [modelDef]="modelDef" [data]="rows"
- [allowAddNew]="false" [allowEditDelete]="allowEdit"
-(onRowActivate)="onActivate($event)" (goToAddNew)="addNew()" (onEdit)="edit($event)"
+<app-list fxFlexFill   [modelDef]="modelDef" [data]="rows"
+ [allowAddNew]="true" [allowEditDelete]="allowEdit" [chooseMode]="chooseMode"
+(onRowActivate)="onActivate($event)" (goToAddNew)="addNew()" (onChoose)="choose($event)" (onEdit)="edit($event)"
  (onDelete)="delete($event)" > 
 </app-list>
 </div>

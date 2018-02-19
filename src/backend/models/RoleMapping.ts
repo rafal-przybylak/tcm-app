@@ -57,11 +57,13 @@ export class RoleMapping implements RoleMappingInterface {
           type: 'number',
           title:''
           
+          
         },
         "principalType": {
           name: 'principalType',
           type: 'string',
           title:''
+          
           
         },
         "principalId": {
@@ -69,11 +71,13 @@ export class RoleMapping implements RoleMappingInterface {
           type: 'string',
           title:''
           
+          
         },
         "roleId": {
           name: 'roleId',
           type: 'number',
           title:''
+          
           
         },
       },

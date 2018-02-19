@@ -1,0 +1,70 @@
+<div class="h-100-p p-8" fxLayout="column" fxLayoutAlign="start stretch" >
+  <!-- <mat-grid-list cols="cols" rowHeight="Fit">
+     <mat-grid-tile
+       *ngFor="let tile of answers"
+       [colspan]="tile.cols"
+       [rowspan]="tile.rows"
+       {{tile.text}}
+     </mat-grid-tile>
+   </mat-grid-list> -->
+  <!-- <mat-list *ngIf="answers" class="p-8 ">
+        <mat-list-item  fxLayout="column">
+            <div fxLayout="row"  class="w-100-p" fxLayoutAlign="space-between center">
+                <div fxFlex="10" >Nazwa</div>   
+                
+                <div fxFlex="30" >Treść pytania</div>
+                <div fxFlex="20" >Włąściwa odpowiedź</div>
+                <div fxFlex="30" >Odpowidź uczestnika</div>
+                <div fxFlex="10" >Ocena (pkt)</div>
+            </div>
+            <mat-divider></mat-divider>
+          </mat-list-item>
+        <mat-list-item *ngFor="let item of answers"  fxLayout="column">
+          <div fxLayout="row"  class="w-100-p font-size-13 " fxLayoutAlign="space-around start">
+              <span fxFlex="10" > {{item.question.name}}</span>   
+              <span fxFlex="30"[innerHTML]="item.question.content" ></span> 
+            
+              <span fxFlex="20" >{{item.question.correctAnswer[0]}}</span>
+              <span fxFlex="20" >{{item.value}}</span>
+              
+              <div  fxFlex="10"  ><mat-form-field class="w-100-p">
+                <input matInput type="number" placeholder=""  name="item.id" value="0" >
+              </mat-form-field></div>
+          </div>
+          <mat-divider></mat-divider>
+        </mat-list-item>
+       
+      </mat-list> -->
+
+  <ngx-datatable fxFlex="auto"  [rows]="answers" [columnMode]="'force'" [headerHeight]="30" [footerHeight]="30"
+    [limit]="100" [scrollbarV]="true" [scrollbarH]="true" class="material "  [rowHeight]="getRowHeight">
+    <!-- <ngx-datatable-column prop="question.name" name="Nazwa" [width]="200"></ngx-datatable-column> -->
+    
+    <ngx-datatable-column name="Pytanie" prop="question.content" [width]="350" [cellClass]="'long-value'">
+        
+        <ng-template let-value="value" ngx-datatable-cell-template>
+        
+          <div  [innerHTML]="value"></div>
+        </ng-template>
+      </ngx-datatable-column>
+    <!-- <ngx-datatable-column name="Właściwa odpowiedź" prop="question.correctAnswer" [width]="200" [cellClass]="'long-value'"> 
+       
+        <ng-template let-value="value" ngx-datatable-cell-template class="long-value">
+       
+          {{value.toString()}}
+         
+        </ng-template>
+      </ngx-datatable-column> -->
+    <!-- <ngx-datatable-column prop="question.correctAnswer" name="Właściwa odpowiedź" [width]="200"></ngx-datatable-column> -->
+    <ngx-datatable-column prop="value" name="Odpowiedź" [width]="400" [cellClass]="'long-value'"></ngx-datatable-column>
+    <ngx-datatable-column prop="score" name="Ocena (pkt)" [width]="100">
+      <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+          <mat-form-field class="w-70" > 
+            <input matInput placeholder="Ocena" autofocus  type="number" class="w-70" (change)="updateValue($event, 'score', rowIndex)" value="value">
+          </mat-form-field>
+        
+      </ng-template>
+    </ngx-datatable-column>
+  </ngx-datatable>
+  <button mat-raised-button  color="primary" fxFlex="30px" (click)="save()">Zapisz</button>
+</div>

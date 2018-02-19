@@ -2,8 +2,16 @@
 (onSave)="save($event)" [layout]="'column'" [fieldsObservable]="formService.getControlsWithValueModel(data.object.id,auth.getCurrentUserId())">
 </tcm-app-form> -->
 
-<mat-card fxFlexFill fxLayout="column" >
-
+<mat-card fxFlexFill fxLayout="column" class="p-8" >
+    <div *ngIf="isEUCourse" fxLayout="row">
+        <div>
+            <img class="w-200" src="assets/images/logos/logo-eu-left.jpg">
+        </div>
+        <div fxFlex="auto"></div>
+        <div>
+            <img class="w-300" src="assets/images/logos/logo-eu-right.jpg">
+        </div>
+    </div>
     <mat-toolbar fxFlex="32px 32px 32px" color="primary">
         <span>{{objectName}}</span>
     </mat-toolbar>
@@ -51,7 +59,7 @@
             
         </dynamic-material-form>
       
-        <button fxFlex="32px" mat-raised-button color="primary" type="submit" (click)="save()">Zapisz</button>
+        <button fxFlex="36px"  mat-raised-button color="primary" type="submit" (click)="save()"><span class="font-size-24">ZAPISZ TEST</span></button>
     </form>
    
 </mat-card>

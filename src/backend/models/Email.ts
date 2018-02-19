@@ -55,18 +55,24 @@ export class Email implements EmailInterface {
           name: 'to',
           type: 'string',
           title:''
+          ,
+          required: true 
           
         },
         "from": {
           name: 'from',
           type: 'string',
           title:''
+          ,
+          required: true 
           
         },
         "subject": {
           name: 'subject',
           type: 'string',
           title:''
+          ,
+          required: true 
           
         },
         "text": {
@@ -74,17 +80,20 @@ export class Email implements EmailInterface {
           type: 'string',
           title:''
           
+          
         },
         "html": {
           name: 'html',
           type: 'string',
           title:''
           
+          
         },
         "id": {
           name: 'id',
           type: 'number',
           title:''
+          
           
         },
       },

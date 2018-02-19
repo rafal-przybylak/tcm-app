@@ -5,7 +5,7 @@ export class ExamConfig {
             label: "Wartość tekstowa"
         }, {
             value: "string[]",
-            label: "Lista wartośći tekstowych"
+            label: "Lista wartości tekstowych"
         },
         {
             value: "text",
@@ -25,7 +25,7 @@ export class ExamConfig {
         },
         {
             value: "radioGroup",
-            label: "Opcje jednokrontego wybory"
+            label: "Opcje jednokrontego wyboru"
         },
         {
             value: "select",

@@ -6,9 +6,9 @@
 
         <ng-container *ngFor="let item of navigationModel">
 
-            <fuse-nav-vertical-group *ngIf="item.type=='group' && hasRights(item.role)" [item]="item"></fuse-nav-vertical-group>
-            <fuse-nav-vertical-collapse *ngIf="item.type=='collapse' && hasRights(item.role)" [item]="item"></fuse-nav-vertical-collapse>
-            <fuse-nav-vertical-item *ngIf="item.type=='item' && hasRights(item.role)" [item]="item"></fuse-nav-vertical-item>
+            <fuse-nav-vertical-group *ngIf="item.type=='group' && (fuseNavigationService.hasRights(item.role) | async)" [item]="item"></fuse-nav-vertical-group>
+            <fuse-nav-vertical-collapse *ngIf="item.type=='collapse' && (fuseNavigationService.hasRights(item.role) |async)" [item]="item"></fuse-nav-vertical-collapse>
+            <fuse-nav-vertical-item *ngIf="item.type=='item' && (fuseNavigationService.hasRights(item.role) |async)" [item]="item"></fuse-nav-vertical-item>
 
         </ng-container>
 
@@ -20,9 +20,9 @@
 
         <ng-container *ngFor="let item of navigationModel">
 
-            <fuse-nav-horizontal-collapse *ngIf="item.type=='group' && hasRights(item.role)" [item]="item"></fuse-nav-horizontal-collapse>
-            <fuse-nav-horizontal-collapse *ngIf="item.type=='collapse' && hasRights(item.role)" [item]="item"></fuse-nav-horizontal-collapse>
-            <fuse-nav-horizontal-item *ngIf="item.type=='item' && hasRights(item.role)" [item]="item"></fuse-nav-horizontal-item>
+            <fuse-nav-horizontal-collapse *ngIf="item.type=='group' && (fuseNavigationService.hasRights(item.role) | async)" [item]="item"></fuse-nav-horizontal-collapse>
+            <fuse-nav-horizontal-collapse *ngIf="item.type=='collapse' && (fuseNavigationService.hasRights(item.role) |async)" [item]="item"></fuse-nav-horizontal-collapse>
+            <fuse-nav-horizontal-item *ngIf="item.type=='item' && (fuseNavigationService.hasRights(item.role) |async)" [item]="item"></fuse-nav-horizontal-item>
 
         </ng-container>
 

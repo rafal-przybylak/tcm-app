@@ -9,47 +9,56 @@
   <form #f="ngForm" (ngSubmit)="onSave()">
     <div class="form-group form-group-full-width">
       <mat-input-container>
-        <input [(ngModel)]="model.firstName" type="text" matInput  name="firstName" placeholder="First Name"/>
+        <input [(ngModel)]="model.firstName" type="text" matInput name="firstName" placeholder="First Name" />
       </mat-input-container>
     </div>
     <div class="form-group form-group-full-width">
       <mat-input-container>
-        <input [(ngModel)]="model.lastName" type="text" matInput  name="lastName" placeholder="Last Name"/>
+        <input [(ngModel)]="model.lastName" type="text" matInput name="lastName" placeholder="Last Name" />
       </mat-input-container>
     </div>
     <div class="form-group form-group-full-width">
       <mat-input-container>
-        <input [(ngModel)]="model.email" type="email" matInput  name="email" placeholder="Email" [required]="true"/>
+        <input [(ngModel)]="model.email" type="email" matInput name="email" placeholder="Email" [required]="true" />
       </mat-input-container>
     </div>
     <div class="form-group form-group-full-width">
       <mat-input-container>
-        <input [(ngModel)]="model.username" matInput  name="username" placeholder="Username" [required]="true"/>
+        <input [(ngModel)]="model.username" matInput name="username" placeholder="Username" [required]="true" />
       </mat-input-container>
     </div>
     <div class="form-group form-group-full-width">
       <mat-input-container>
-        <input [(ngModel)]="model.password" type="password" matInput  name="password" placeholder="Password"
-               [required]="passwordRequired"/>
+        <input [(ngModel)]="model.password" type="password" matInput name="password" placeholder="Password" [required]="passwordRequired"
+        />
       </mat-input-container>
     </div>
-    <div class="form-group form-group-full-width">
-        <mat-checkbox class="user-role-checkbox" name="user-role"  [(ngModel)]="model.passChangeRequired">
-Wymagana zmiana hasła
-</mat-checkbox>
-      </div>
-    <div *ngIf="model.id" adminElement class="form-group form-group-full-width">
-      <label class="form-label">Roles</label>
+
+    <div  adminElement class="form-group form-group-full-width">
+      <label class="form-label">Rola:</label>
       <div *ngFor="let role of roles">
-        <mat-checkbox class="user-role-checkbox" name="user-role" value="role"
-                     (change)="updateRoles(role, $event)" [checked]="isExistById(model.roles,role)">
+        <mat-checkbox class="user-role-checkbox" name="user-role" value="role" (change)="updateRoles(role, $event)" [checked]="isExistById(model.roles,role)">
           {{role.name}}
         </mat-checkbox>
       </div>
     </div>
-
-    <div class="form-group card-actions">
-      <button type="submit" mat-raised-button color="primary"  >{{action}}</button>
+    <div class="form-group form-group-full-width">
+      <mat-form-field>
+          <mat-select placeholder="Zakres szkoleń" [(ngModel)]="trainerScopes" multiple name="item">
+              <mat-option *ngFor="let item of coursScoules$|async" [value]="item.id">
+                {{item.name}}
+              </mat-option>
+            </mat-select>
+      </mat-form-field>
+    
+    </div>
+    <div class="form-group form-group-full-width">
+      <mat-checkbox class="user-role-checkbox" name="user-role" [(ngModel)]="model.passChangeRequired">
+        Wymagana zmiana hasła
+      </mat-checkbox>
+    </div>
+    <div class="form-group card-actions pt-24">
+      <button type="submit" mat-raised-button color="primary">{{action}}</button>
       <button type="button" mat-button color="warn" (click)="dialog.close()">Anuluj</button>
     </div>
 

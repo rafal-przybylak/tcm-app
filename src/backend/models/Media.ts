@@ -1,6 +1,7 @@
 /* tslint:disable */
 import {
-  User
+  User,
+  Course
 } from '../index';
 
 declare var Object: any;
@@ -9,11 +10,13 @@ export interface MediaInterface {
   "type"?: string;
   "container"?: string;
   "size"?: number;
-  "id"?: number;
   "userId"?: number;
+  "id"?: number;
+  "deletedAt"?: Date;
   "createdAt": Date;
   "updatedAt": Date;
   user?: User;
+  courses?: Course[];
 }
 
 export class Media implements MediaInterface {
@@ -21,11 +24,13 @@ export class Media implements MediaInterface {
   "type": string;
   "container": string;
   "size": number;
-  "id": number;
   "userId": number;
+  "id": number;
+  "deletedAt": Date;
   "createdAt": Date;
   "updatedAt": Date;
   user: User;
+  courses: Course[];
   constructor(data?: MediaInterface) {
     Object.assign(this, data);
   }
@@ -63,25 +68,36 @@ export class Media implements MediaInterface {
         "name": {
           name: 'name',
           type: 'string',
-          title:''
+          title:'Nazwa'
+          
           
         },
         "type": {
           name: 'type',
           type: 'string',
-          title:''
+          title:'Typ'
+          
           
         },
         "container": {
           name: 'container',
           type: 'string',
-          title:''
+          title:'Katalog'
+          
           
         },
         "size": {
           name: 'size',
           type: 'number',
-          title:''
+          title:'Rozmiar'
+          
+          
+        },
+        "userId": {
+          name: 'userId',
+          type: 'number',
+          title:'Właściciel'
+          
           
         },
         "id": {
@@ -89,23 +105,29 @@ export class Media implements MediaInterface {
           type: 'number',
           title:''
           
+          
         },
-        "userId": {
-          name: 'userId',
-          type: 'number',
+        "deletedAt": {
+          name: 'deletedAt',
+          type: 'Date',
           title:''
+          
           
         },
         "createdAt": {
           name: 'createdAt',
           type: 'Date',
           title:''
+          ,
+          required: true 
           
         },
         "updatedAt": {
           name: 'updatedAt',
           type: 'Date',
           title:''
+          ,
+          required: true 
           
         },
       },
@@ -117,6 +139,14 @@ export class Media implements MediaInterface {
           relationType: 'belongsTo',
                   keyFrom: 'userId',
           keyTo: 'id'
+        },
+        courses: {
+          name: 'courses',
+          type: 'Course[]',
+          model: 'Course',
+          relationType: 'hasMany',
+                  keyFrom: 'id',
+          keyTo: 'mediaId'
         },
       }
     }

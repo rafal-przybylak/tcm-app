@@ -10,6 +10,7 @@ import { ExamViewerComponent } from './exam-viewer/exam-viewer.component';
 import { ExamModule } from './exam.module';
 import { AuthGuard } from '../../../auth-guard.service';
 import { CoreConfig } from '../../../core/api.config';
+import { CourseExamService } from './course-exam.service';
 const routes = [
   {
     path: '',
@@ -29,7 +30,7 @@ const routes = [
     path: ':id/view',
     component: ExamViewerComponent,
     resolve: {
-      data: ExamService
+      data: CourseExamService
     }
   }
 ];

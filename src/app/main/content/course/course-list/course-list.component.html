@@ -1,78 +1,105 @@
-<div class="w-100-p"  fxLayout="column" fxFexFill >
+<div class="w-100-p" fxLayout="column" fxFexFill>
     <!-- <tcm-app-form tcmAdminElement [objectName]="objectName" [formValue]="courseModel" [formFields]="courseFields" (onSave)="save($event)">
 
     </tcm-app-form> -->
-    <div tcmAdminElement >
-        <form class="mat-white-bg mat-elevation-z4 p-8 m-4 " (ngSubmit)="save(form)" fxLayout="column" fxLayoutAlign="start" [formGroup]="form">
+    <div tcmAdminElement>
+        <mat-card>
+            <mat-card-header>
+                <!-- <mat-card-title>title</mat-card-title> -->
+                <mat-card-subtitle>Edycja szkolenia</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <form class="mat-white-bg mat-elevation-z4 p-8 m-4 " #formview (ngSubmit)="save(form)" fxLayout="column" fxLayoutAlign="start"
+                    [formGroup]="form">
 
-            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px" fxFlex="1 1 auto">
+                    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px" fxFlex="1 1 auto">
 
-                <mat-form-field fxFlex="30">
-                    <input matInput placeholder="Temat" formControlName="name" [(ngModel)]="courseModel.name" required>
-                    <mat-error *ngIf="formErrors.name.required">
-                        Temat jest wymagany!
-                    </mat-error>
-                </mat-form-field>
+                        <mat-form-field fxFlex="50">
+                            <input matInput placeholder="Temat" formControlName="name" [(ngModel)]="courseModel.name" required>
+                            <mat-error *ngIf="formErrors.name.required">
+                                Temat jest wymagany!
+                            </mat-error>
+                        </mat-form-field>
+                        <div fxFlex="50" fxLayoutGap="20px">
+                            <div fxFlex fxLayout="column" class="mat-caption font-size-16" fxLayoutAlign="start start " fxLayoutGap="5px">
+                                <span>Początek szkolenia</span>
+                                <owl-date-time placeholder="Data rozpoczęcia" formControlName="startDt" [(ngModel)]="courseModel.startDt" required></owl-date-time>
+                                <mat-error *ngIf="formErrors.startDt.required">
+                                    Pole jest wymagane!
+                                </mat-error>
+                            </div>
 
-                <mat-form-field fxFlex="50">
-                    <textarea matInput placeholder="Opis" formControlName="desc" [(ngModel)]="courseModel.desc" required matTextareaAutosize
-                        matAutosizeMinRows="1" matAutosizeMaxRows="5"></textarea>
-                    <mat-error *ngIf="formErrors.desc.required">
-                        Opis jest wymagany!
-                    </mat-error>
-                </mat-form-field>
+                            <div fxFlex fxLayout="column" class="mat-caption font-size-16" fxLayoutGap="5px" fxLayoutAlign="start start ">
+                                <span>"Koniec szkolenia </span>
+                                <owl-date-time matInput placeholder="Data zakończenia" [(ngModel)]="courseModel.endDt" formControlName="endDt"></owl-date-time>
+                                <mat-error *ngIf="formErrors.endDt.required">
+                                    Pole jest wymagane!
+                                </mat-error>
+                            </div>
 
-                <div fxFlex="20">
-                    <mat-checkbox placeholder="Bezpłatne" formControlName="free" [(ngModel)]="courseModel.free">Bezpłatne</mat-checkbox>
 
-                </div>
+                            <div fxFlex>
+                                <mat-checkbox placeholder="Bezpłatne" formControlName="free" [(ngModel)]="courseModel.free">Bezpłatne</mat-checkbox>
 
-            </div>
+                            </div>
+                            <div fxFlex>
+                                <mat-checkbox placeholder="Finanfowanie EU" formControlName="fundingEU" [(ngModel)]="courseModel.fundingEU">Finanfowanie EU</mat-checkbox>
 
-            <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="start center" fxFlex="1 1 auto" fxLayoutWrap>
-                <div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="start center" fxFlex="1 1 auto" fxLayoutWrap>
-
-                    <div fxLayout="column" fxLayoutGap="5px">
-                        <span>Początek szkolenia</span>
-                        <owl-date-time placeholder="Data rozpoczęcia" formControlName="startDt" [(ngModel)]="courseModel.startDt" required></owl-date-time>
-                        <mat-error *ngIf="formErrors.startDt.required">
-                            Pole jest wymagane!
-                        </mat-error>
+                            </div>
+                        </div>
                     </div>
 
-                    <div fxLayout="column" fxLayoutGap="5px">
-                        <span>"Koniec szkolenia </span>
-                        <owl-date-time matInput placeholder="Data zakończenia" [(ngModel)]="courseModel.endDt" formControlName="endDt"></owl-date-time>
-                        <mat-error *ngIf="formErrors.endDt.required">
-                            Pole jest wymagane!
-                        </mat-error>
-                    </div>
-                    <button mat-raised-button color="primary" [disabled]="!form.valid" type="submit">Zapisz</button>
-                    <button mat-mini-fab="mat-warn" (click)="addNew()" aria-label="Dodaj nowy" *fuseIfOnDom>
-                        <mat-icon>add</mat-icon>
-                    </button>
-                </div>
-                <agm-map fxFlex="2 2 auto" class=" w-300 h-300" [zoom]="12" [latitude]="courseModel.goelocLat" (mapClick)="placeMarker($event)"
-                    [longitude]="courseModel.goelocLong">
-                    <agm-marker [latitude]="courseModel.goelocLat" [longitude]="courseModel.goelocLong">
-                        <agm-circle [latitude]="courseModel.goelocLat" [longitude]="courseModel.goelocLong" [radius]="60" [fillOpacity]="0.50" [fillColor]="'#00A19A'"></agm-circle>
-                    </agm-marker>
-                </agm-map>
-                <!-- <mat-form-field fxFlex="200px">
-                <input matInput placeholder="Szerokość geog."  [(ngModel)]="courseModel.goelocLat" formControlName="goelocLat" required>
-                <mat-error *ngIf="formErrors.goelocLat.required">
-                    Temat jest wymagany!
-                </mat-error>
-            </mat-form-field>
-            <mat-form-field fxFlex="200px">
-                <input matInput placeholder="Długość geog."  [(ngModel)]="courseModel.goelocLong" formControlName="goelocLong" required>
-                <mat-error *ngIf="formErrors.goelocLong.required">
-                    Temat jest wymagany!
-                </mat-error>
-            </mat-form-field> -->
-            </div>
 
-        </form>
+                    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px" fxFlex="1 1 auto">
+                        <mat-form-field fxFlex="50">
+                            <textarea matInput placeholder="Opis" formControlName="desc" [(ngModel)]="courseModel.desc" matTextareaAutosize matAutosizeMinRows="1"
+                                matAutosizeMaxRows="5"></textarea>
+
+                        </mat-form-field>
+                        <mat-form-field fxFlex="50">
+                            <textarea matInput placeholder="Cel szkolenia" formControlName="purpose" [(ngModel)]="courseModel.purpose" matTextareaAutosize
+                                matAutosizeMinRows="1" matAutosizeMaxRows="5"></textarea>
+
+                        </mat-form-field>
+                    </div>
+                    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px" fxFlex="1 1 auto">
+                        <mat-form-field fxFlex="50">
+                            <textarea matInput placeholder="Dla kogo" formControlName="recipient" [(ngModel)]="courseModel.recipient" matTextareaAutosize
+                                matAutosizeMinRows="1" matAutosizeMaxRows="5"></textarea>
+
+                        </mat-form-field>
+                        <mat-form-field fxFlex="50">
+                            <textarea matInput placeholder="Program szkolenia" formControlName="agenda" [(ngModel)]="courseModel.agenda" matTextareaAutosize
+                                matAutosizeMinRows="1" matAutosizeMaxRows="5"></textarea>
+
+                        </mat-form-field>
+                    </div>
+
+                    <!-- <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="start center" fxFlex="1 1 auto" fxLayoutWrap>
+                                <div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="start center" fxFlex="1 1 auto" fxLayoutWrap>
+                
+                
+                                   
+                                </div>
+                                <agm-map fxFlex="2 2 auto" class=" w-300 h-300" [zoom]="12" [latitude]="courseModel.goelocLat" (mapClick)="placeMarker($event)"
+                                    [longitude]="courseModel.goelocLong">
+                                    <agm-marker [latitude]="courseModel.goelocLat" [longitude]="courseModel.goelocLong">
+                                        <agm-circle [latitude]="courseModel.goelocLat" [longitude]="courseModel.goelocLong" [radius]="60" [fillOpacity]="0.50" [fillColor]="'#00A19A'"></agm-circle>
+                                    </agm-marker>
+                                </agm-map>
+                              
+                            </div> -->
+
+                </form>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-raised-button color="primary" (click)="save(form.value)" [disabled]="!form.valid" type="submit">Zapisz</button>
+                <button mat-mini-fab="mat-warn" (click)="addNew()" aria-label="Dodaj nowy" *fuseIfOnDom>
+                    <mat-icon>add</mat-icon>
+                </button>
+            </mat-card-actions>
+        </mat-card>
+
     </div>
     <!-- CONTENT -->
     <div fusePerfectScrollbar>
@@ -89,7 +116,16 @@
 
                     <!-- Front -->
                     <div class="fuse-widget-front mat-white-bg mat-elevation-z2" fxLayout="column" (click)="onDetails(cours.id)">
-                        <div class="pl-16 pr-8 py-4 blue-100-bg"   fxLayout="row" fxLayoutAlign="space-between center">
+                        <div *ngIf="cours.fundingEU" fxLayout="row">
+                            <div>
+                                <img class="w-200" src="assets/images/logos/logo-eu-left.jpg">
+                            </div>
+                            <div fxFlex="auto"></div>
+                            <div>
+                                <img class="w-300" src="assets/images/logos/logo-eu-right.jpg">
+                            </div>
+                        </div>
+                        <div class="pl-16 pr-8 py-4 blue-100-bg" fxLayout="row" fxLayoutAlign="space-between center">
                             <!-- <div fxLayout="row" fxLayoutAlign="start center" *ngIf="auth.isAdmin" (click)="setCourse(cours.id) ">
                                 <button mat-icon-button class="fuse-widget-flip-button" aria-label="details">
                                     <mat-icon>info_outline</mat-icon>
@@ -97,18 +133,18 @@
                                 </button>
                                 <div class="h3">Edycja</div>
                             </div> -->
-                            <button mat-button *ngIf="auth.isAdmin" (click)="setCourse(cours.id)" >
+                            <button mat-button *ngIf="auth.isAdmin" (click)="setCourse($event,cours.id)">
                                 <div class="user-nemu" fxLayout="row" fxLayoutAlign="center center">
-                                    
-                                    <mat-icon >mode_edit</mat-icon>
+
+                                    <mat-icon>mode_edit</mat-icon>
                                     <div class="h3">Edycja</div>
                                 </div>
 
                             </button>
-                            <button mat-button *ngIf="auth.isAdmin" (click)="deleteCourse(cours.id)" >
+                            <button mat-button *ngIf="auth.isAdmin" (click)="deleteCourse($event,cours.id)">
                                 <div class="user-nemu" fxLayout="row" fxLayoutAlign="center center">
-                                    
-                                    <mat-icon >delete_forever</mat-icon>
+
+                                    <mat-icon>delete_forever</mat-icon>
                                     <div class="h3">Usuń</div>
                                 </div>
 
@@ -117,16 +153,17 @@
                                 <mat-icon>more_vert</mat-icon>
                             </button> -->
                         </div>
-                        
-                        <div class="blue-100-bg p-4"  fxFlex >
-                            <div class="blue-fg font-size-36 line-height-36" style="text-align: center;">
+
+                        <div class="blue-100-bg pb-8 pr-4 pl-4" fxFlex>
+                            <div class="blue-fg font-size-24 line-height-24" style="text-align: center;">
                                 {{cours.name}}
                             </div>
 
                         </div>
-                        <div class="h3 date-period indigo-50-bg p-4" fxFlex >&nbsp;&nbsp;Szkolenie:&nbsp; {{cours.startDt | dateFormat}}   &nbsp;-&nbsp;   {{cours.endDt | dateFormat}}</div>
-                        <div class="h3 date-period indigo-50-bg p-4" fxFlex >Rejestracja:&nbsp; {{cours.startDt | dateFormat}}   &nbsp;-&nbsp;   {{cours.endDt | dateFormat}}</div>
-                        <div class="h3 p-8 grey-100-bg" fxFlex="auto">{{cours.desc}}</div>
+                        <div class="h3 date-period indigo-50-bg p-4" fxFlex>&nbsp;&nbsp;Termin szkolenia:&nbsp; {{cours.startDt | dateFormat}} &nbsp;-&nbsp; {{cours.endDt |
+                            dateFormat}}</div>
+                        <!-- <div class="h3 date-period indigo-50-bg p-4" fxFlex>Rejestracja:&nbsp; {{cours.startDt | dateFormat}} &nbsp;-&nbsp; {{cours.endDt | dateFormat}}</div>
+                        <div class="h3 p-8 grey-100-bg" fxFlex="auto">{{cours.desc}}</div> -->
                         <!-- <div class="pl-16 pr-8 py-16 h-52" fxLayout="row" fxLayoutAlign="space-between center">
                             <div class="h3">{{cours.desc}}</div>
                             <div class="h3">{{cours.startDt | dateFormat}}</div>

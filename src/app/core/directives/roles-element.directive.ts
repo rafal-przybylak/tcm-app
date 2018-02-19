@@ -8,15 +8,15 @@ export class RolesElementDirective implements OnInit {
   @Input('tcmRolesElement') roles: string[];
   ngOnInit(): void {
     let isInRole = false;
-   
+   let __this=this;
     this.auth._userRoles.subscribe(userRoles => {
-      this.roles.forEach(role => {
+      __this.roles.forEach(role => {
         isInRole = isInRole || userRoles.includes(role);
       })
       if (!isInRole) {
-        this.el.nativeElement.hidden =true;
+        __this.el.nativeElement.hidden =true;
       } else {
-        this.el.nativeElement.hidden =false;
+        __this.el.nativeElement.hidden =false;
       }
     });
   }

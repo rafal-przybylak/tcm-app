@@ -13,7 +13,7 @@ export interface MediaLinkInterface {
   "updatedAt": Date;
   media?: Media;
   avatar?: any;
-  node?: any;
+  courseFiles?: any;
 }
 
 export class MediaLink implements MediaLinkInterface {
@@ -25,7 +25,7 @@ export class MediaLink implements MediaLinkInterface {
   "updatedAt": Date;
   media: Media;
   avatar: any;
-  node: any;
+  courseFiles: any;
   constructor(data?: MediaLinkInterface) {
     Object.assign(this, data);
   }
@@ -65,11 +65,13 @@ export class MediaLink implements MediaLinkInterface {
           type: 'number',
           title:''
           
+          
         },
         "mediaId": {
           name: 'mediaId',
           type: 'number',
           title:''
+          
           
         },
         "refId": {
@@ -77,23 +79,29 @@ export class MediaLink implements MediaLinkInterface {
           type: 'number',
           title:''
           
+          
         },
         "refType": {
           name: 'refType',
           type: 'string',
           title:''
           
+          
         },
         "createdAt": {
           name: 'createdAt',
           type: 'Date',
           title:''
+          ,
+          required: true 
           
         },
         "updatedAt": {
           name: 'updatedAt',
           type: 'Date',
           title:''
+          ,
+          required: true 
           
         },
       },
@@ -114,8 +122,8 @@ export class MediaLink implements MediaLinkInterface {
                   keyFrom: 'refId',
           keyTo: 'id'
         },
-        node: {
-          name: 'node',
+        courseFiles: {
+          name: 'courseFiles',
           type: 'any',
           model: '',
           relationType: 'belongsTo',

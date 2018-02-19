@@ -62,6 +62,12 @@ import { UserAnswerApi } from './services/custom/UserAnswer';
 import { MediaApi } from './services/custom/Media';
 import { MediaLinkApi } from './services/custom/MediaLink';
 import { StorageApi } from './services/custom/Storage';
+import { CourseScopeApi } from './services/custom/CourseScope';
+import { CourseTestApi } from './services/custom/CourseTest';
+import { UserCourseTestApi } from './services/custom/UserCourseTest';
+import { TrainerCourseApi } from './services/custom/TrainerCourse';
+import { TrainerCourseScopeApi } from './services/custom/TrainerCourseScope';
+import { CourseCandidateApi } from './services/custom/CourseCandidate';
 /**
 * @module SDKBrowserModule
 * @description
@@ -106,6 +112,12 @@ export class SDKBrowserModule {
         MediaApi,
         MediaLinkApi,
         StorageApi,
+        CourseScopeApi,
+        CourseTestApi,
+        UserCourseTestApi,
+        TrainerCourseApi,
+        TrainerCourseScopeApi,
+        CourseCandidateApi,
         internalStorageProvider,
         { provide: SDKStorage, useClass: StorageBrowser },
         { provide: SocketDriver, useClass: SocketBrowser }

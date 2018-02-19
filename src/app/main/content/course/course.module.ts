@@ -13,6 +13,10 @@ import { AppListModule } from '../../app-list/app-list.module';
 import { AppListComponent } from '../../app-list/app-list.component';
 import { ExamComponent } from '../exam/exam/exam.component';
 import { ExamModule } from '../exam/exam.module';
+import { ExamsComponent } from '../exam/exams/exams.component';
+import { CourseExamComponent } from './course-exam/course-exam.component';
+import { CourseExamEvalComponent } from './course-exam-eval/course-exam-eval.component';
+import { CourseExamListComponent } from './course-exam-list/course-exam-list.component';
 
 
 const routes = [
@@ -43,10 +47,10 @@ const routes = [
       apiKey: 'AIzaSyB9fQ4_CECefuOOFoE2zi0aYVuCftSF5Js'
     })
   ],
-  declarations: [CourseListComponent, CourseDetailsComponent],
+  declarations: [CourseListComponent, CourseDetailsComponent, CourseExamComponent, CourseExamEvalComponent, CourseExamListComponent],
   exports: [CourseListComponent, CourseDetailsComponent],
   providers: [ControlGeneratorService],
-  entryComponents: [AppListComponent, ExamComponent]
+  entryComponents: [AppListComponent, ExamComponent,ExamsComponent,CourseExamComponent,CourseExamEvalComponent]
 
 })
 export class CourseModule { }
