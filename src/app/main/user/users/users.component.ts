@@ -1,10 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {UserApi} from "../../../../backend/services/custom/User";
-import {MatDialog, MAT_DIALOG_DATA}  from "@angular/material";
-import {UserFormComponent} from "../user-form/user-form.component";
+import { Component, OnInit } from '@angular/core';
+import { UserApi } from "../../../../backend/services/custom/User";
+import { MatDialog, MAT_DIALOG_DATA } from "@angular/material";
+import { UserFormComponent } from "../user-form/user-form.component";
 //import {AppService} from "../../shared/services/app.service";
-import {DialogService} from "../../../core/services/dialog.service";
-import {RoleApi} from "../../../../backend/services/custom/Role";
+import { DialogService } from "../../../core/services/dialog.service";
+import { RoleApi } from "../../../../backend/services/custom/Role";
 import { Role } from '../../../../backend/models/Role';
 import { LoopBackFilter } from '../../../../backend/index';
 import { FuseConfirmDialogComponent } from '../../../core/components/confirm-dialog/confirm-dialog.component';
@@ -26,7 +26,7 @@ export class UsersComponent implements OnInit {
         include: [
             {
                 relation: 'roles',
-                scope: {order: 'id DESC'}
+                scope: { order: 'id DESC' }
             }
         ],
         limit: 25,
@@ -35,10 +35,10 @@ export class UsersComponent implements OnInit {
     errorMessage: string;
 
     constructor(public dialog: MatDialog,
-                public dialogService: DialogService,
-               // private app: AppService,
-                private roleService: RoleApi,
-                private userService: UserApi) {
+        public dialogService: DialogService,
+        // private app: AppService,
+        private roleService: RoleApi,
+        private userService: UserApi) {
     }
 
 
@@ -65,7 +65,7 @@ export class UsersComponent implements OnInit {
 
     removeItems(items: any[]) {
 
-        let dialogRef = this.dialogService.confirm("Czy jesteś pewien?", "Czy jesteś pewien, że chcesz usunąć znaczonych użytkowników, operacji nie będzie można wycofać.","Usuń","Anuluj",{width: '300px'});
+        let dialogRef = this.dialogService.confirm("Czy jesteś pewien?", "Czy jesteś pewien, że chcesz usunąć znaczonych użytkowników, operacji nie będzie można wycofać.", "Usuń", "Anuluj", { width: '300px' });
 
         dialogRef.afterClosed().subscribe(confirm => {
 
@@ -88,7 +88,7 @@ export class UsersComponent implements OnInit {
 
     editItem(selectedItems: any) {
 
-        let dialogRef = this.dialog.open(UserFormComponent, {width: '500px'});
+        let dialogRef = this.dialog.open(UserFormComponent, { width: '500px' });
 
 
         dialogRef.componentInstance['selectedModel'] = JSON.parse(JSON.stringify(selectedItems[0]));
@@ -108,8 +108,8 @@ export class UsersComponent implements OnInit {
 
     addItem(event?: any) {
 
-        
-        let dialogRef = this.dialog.open(UserFormComponent, {width: '500px'});
+
+        let dialogRef = this.dialog.open(UserFormComponent, { width: '500px' });
         dialogRef.componentInstance['roles'] = this.roles;
         dialogRef.afterClosed().subscribe((item: any) => {
             if (item) {
@@ -140,7 +140,7 @@ export class UsersComponent implements OnInit {
                 this.models = this.models.concat(res);
             });
         } else {
-            if (this.modelCounts > event.size*(event.size-1)) {
+            if (this.modelCounts > event.size * (event.size - 1)) {
                 this.currentPage = event.page;
                 this.filter.limit = event.size;
                 this.filter.skip = event.size * (event.page - 1);
@@ -149,7 +149,7 @@ export class UsersComponent implements OnInit {
                     this.models = data;
                 });
             }
-            else{
+            else {
                 this.currentPage = 1;
                 this.filter.limit = event.size;
                 this.filter.skip = 0;
@@ -201,19 +201,20 @@ export class UsersComponent implements OnInit {
     doChangeAvatar(model: any, obj: any, avatar: any) {
 
         this.userService.updateAvatar(model.id, obj).subscribe(res => {
-            model.avatar = {media: avatar};
+            model.avatar = { media: avatar };
 
         }, err => {
             this.errorMessage = err.message;
         });
     }
-verify(selectedItems: any){
-    selectedItems.forEach(element => {
-        this.userService.verify(element.id).subscribe();
-    });
-    let dialRef = this.dialog.open(FuseConfirmDialogComponent);
-      dialRef.componentInstance.confirmMessage="Weryfikacyjne wiadomości e-mail zostały wysłane do wybranych użytkowników.";
-      dialRef.componentInstance.onlyConfirm=true;
-}
+    verify(selectedItems: any) {
+        for (let index = 0; index < selectedItems.length; index++) {
+            setTimeout(() => this.userService.verify(selectedItems[index].id).subscribe(), index * 3000);
+
+        };
+        let dialRef = this.dialog.open(FuseConfirmDialogComponent);
+        dialRef.componentInstance.confirmMessage = "Weryfikacyjne wiadomości e-mail zostały wysłane do wybranych użytkowników.";
+        dialRef.componentInstance.onlyConfirm = true;
+    }
 
 }

@@ -30,7 +30,8 @@ export class CourseExamEvalComponent implements OnInit {
         where: { userCourseTestId: {inq:userCourses.map(x=>x.id)}} , order: "questionId ASC"
       }).subscribe(datas => {
         this.answers = datas.filter(ans => ans.question != null);
-      })
+      },error=>console.log(error)
+      )
     });
     
   }
