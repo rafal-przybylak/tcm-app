@@ -393,6 +393,52 @@ export class UserCourseTestApi extends BaseLoopBackApi {
   }
 
   /**
+   * Sends evaluat e-mail messages to test users.
+   *
+   * @param {any} userTestId 
+   *
+   * @returns {object[]} An empty reference that will be
+   *   populated with the actual data once the response is returned
+   *   from the server.
+   *
+   * Evaluated userTest
+   */
+  public sendEvaluateMessage(userTestId: any, customHeaders?: Function): Observable<any> {
+    let _method: string = "GET";
+    let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
+    "/userCourseTests/send-valuate-message";
+    let _routeParams: any = {};
+    let _postBody: any = {};
+    let _urlParams: any = {};
+    if (typeof userTestId !== 'undefined' && userTestId !== null) _urlParams.userTestId = userTestId;
+    let result = this.request(_method, _url, _routeParams, _urlParams, _postBody, null, customHeaders);
+    return result;
+  }
+
+  /**
+   * Sends remainder e-mail messages to users.
+   *
+   * @param {number} courseTestId 
+   *
+   * @returns {object[]} An empty reference that will be
+   *   populated with the actual data once the response is returned
+   *   from the server.
+   *
+   * Evaluated userTest
+   */
+  public sendExamReminder(courseTestId: any, customHeaders?: Function): Observable<any> {
+    let _method: string = "GET";
+    let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
+    "/userCourseTests/send-test-reminder";
+    let _routeParams: any = {};
+    let _postBody: any = {};
+    let _urlParams: any = {};
+    if (typeof courseTestId !== 'undefined' && courseTestId !== null) _urlParams.courseTestId = courseTestId;
+    let result = this.request(_method, _url, _routeParams, _urlParams, _postBody, null, customHeaders);
+    return result;
+  }
+
+  /**
    * Creates a new instance in userAnswers of this model.
    *
    * @param {any} id userCourseTest id

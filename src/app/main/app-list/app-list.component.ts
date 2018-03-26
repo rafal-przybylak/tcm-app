@@ -35,6 +35,8 @@ export class AppListComponent implements OnInit {
   @Input() public allowAddNew: boolean = true;
   @Input() public allowEditDelete: boolean = true;
   @Input() public chooseMode: boolean = false;
+  @Input() public chooseCustom: string = '';
+  @Input() public chooseCustomTooltiop: string = '';
   //@Input() public data: any[] ;// Observable<any[]> =new  Observable<any[]>() ;
   private _data = new BehaviorSubject<any[]>([]);
   //public data2: any[] ;

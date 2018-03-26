@@ -53,7 +53,8 @@ export class FuseLogin2Component implements OnInit {
     ngOnInit() {
         this.loginForm = this.formBuilder.group({
             email: ['', [Validators.required, Validators.email]],
-            password: ['', Validators.required]
+            password: ['', Validators.required],
+            captcha:['', Validators.required]
         });
 
         this.loginForm.valueChanges.subscribe(() => {
@@ -103,6 +104,10 @@ export class FuseLogin2Component implements OnInit {
 
         });
     }
+    public resolved(captchaResponse: string) {
+        this.loginForm.valid;
+    }
+
     getConfigValue(key: string): any {
         return getDeepFromObject(this.config, key, null);
     }

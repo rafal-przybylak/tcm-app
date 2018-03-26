@@ -51,6 +51,8 @@ registerLocaleData(localePl);
         //ForgotPassword2Module,LockModule,MailConfirmModule,Register2Module,ResetPassword2Module,
         SDKBrowserModule.forRoot(),
         AppAuthModule.forRoot(),
+       
+
         // NbAuthModule.forRoot({
         //     providers: {
         //       email: {

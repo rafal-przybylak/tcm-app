@@ -286,7 +286,7 @@ export class CourseDetailsComponent implements OnInit {
     data.userId = this.loopbackApi.getCurrentUserId();
     data.requestDt = new Date();
     this.candidateApi.create(data).subscribe((savedData) => {
-      let confirm = this.confirmService.confirm("Powiadomienie", "Twoje zgłoszenie na wybrane szkolenie zostało zapisane, powiadomimy cię mailowo o akceptacji zgłoszenia i szczegółach szkolenia!", "OK", "")
+      let confirm = this.confirmService.confirm("Powiadomienie", "Twoje zgłoszenie na wybrane szkolenie zostało zapisane. Materaiły szkoleniowe oraz testy będą dostępne po weryfikacji zgłoszenia, o której zostaniesz powiadomiony mailowo.", "OK", "")
       this.candidateObject = savedData;
     }, error => {
       let confirm = this.confirmService.confirm("Powiadomienie", "Twoje zgłoszenie NIE zostało zapisane w systemie, spróbuj ponownie, w razie powtórzenia tego komunikatu skontaktuj się z administratorem serwisu.", "OK", "");

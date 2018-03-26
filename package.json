@@ -49,6 +49,7 @@
     "moment-timezone": "0.5.14",
     "ng-katex": "0.3.37",
     "ng-pick-datetime": "5.0.0-beta.15",
+    "ng-recaptcha": "3.0.3",
     "ng2-file-upload": "1.3.0",
     "ngx-color-picker": "4.4.0",
     "ngx-cookie-service": "1.0.9",

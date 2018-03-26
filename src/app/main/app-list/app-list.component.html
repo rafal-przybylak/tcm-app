@@ -7,13 +7,18 @@
         <mat-icon>add</mat-icon>
       </button>
     </div>
-    <div  *ngIf="chooseMode">
-      <button  mat-mini-fab class="add-file-button mat-action" (click)="onSelectionChoose()" aria-label="Wybierz" *fuseIfOnDom>
+    <div  *ngIf="chooseMode && chooseCustom==''">
+      <button  mat-mini-fab class="add-file-button mat-action" (click)="onSelectionChoose()"  matTooltip="{{chooseCustomTooltiop || 'Wybierz'}}" aria-label="Wybierz" *fuseIfOnDom>
         <mat-icon>playlist_add_check</mat-icon>
       </button>
     </div>
+    <div  *ngIf="chooseMode && chooseCustom!=''">
+      <button  mat-raised-button color="primary" (click)="onSelectionChoose()" matTooltip="{{chooseCustomTooltiop || chooseCustom}}" aria-label="Wybierz" *fuseIfOnDom>
+      {{chooseCustom}}
+      </button>
+    </div>
     <div  *ngIf="selected.length==1 && allowEditDelete">
-        <button mat-raised-button (click)="edit()" aria-label="Edytuj" *fuseIfOnDom>
+        <button mat-raised-button  (click)="edit()" aria-label="Edytuj" *fuseIfOnDom>
           <mat-icon>mode_edit</mat-icon>
         </button>
       </div>

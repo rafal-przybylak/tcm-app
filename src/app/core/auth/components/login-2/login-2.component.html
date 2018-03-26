@@ -59,7 +59,13 @@
                         Resetuj hasło
                     </a>
                 </div>
-
+                <re-captcha
+                formControlName="captcha"
+                (resolved)="resolved($event)"
+                required
+                siteKey="6Lfa-EoUAAAAADLmQ-XP3U9fWPZ-7yKG7NffD4gL"
+               
+              ></re-captcha>
                 <button mat-raised-button color="accent" (click)="login()" class="submit-button" aria-label="LOGIN"
                         [disabled]="loginForm.invalid">
                     ZALOGUJ

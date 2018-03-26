@@ -70,9 +70,14 @@ export class CourseExamComponent implements OnInit {
 
   }
   getUserTestData() {
-    this.userCourseTestApi.find<UserCourseTest>({ include: ["user"], where: { courseTestId: this.courseTest.id } }).subscribe(exams => {
-      this.userCourseExamRows = exams;
-    });
+    if(this.courseTest.id){
+      this.userCourseTestApi.find<UserCourseTest>({ include: ["user"], where: { courseTestId: this.courseTest.id } }).subscribe(exams => {
+        this.userCourseExamRows = exams;
+      });
+    }else{
+      this.userCourseExamRows = [];
+    }
+    
   }
   avaluateUsers() {
     this.userCourseTestApi.find<UserCourseTest>({ where: { courseTestId: this.courseTest.id } }).subscribe(userCourses => {
@@ -97,5 +102,59 @@ export class CourseExamComponent implements OnInit {
         this.userCourseExamRows=this.userCourseExamRows.filter(x=>x.id!=exam.id);
       })
     });
+  }
+  sendAllUserExamInfo(){
+    this.userCourseTestApi.find<UserCourseTest>({ where: { courseTestId: this.courseTest.id,completeDt:null } }).subscribe(userCourses => {
+      this.sendUserExamInfo(userCourses);
+    });
+  }
+  sendExamReminder(){
+   
+      this.userCourseTestApi.sendExamReminder(this.courseTest.id).subscribe((sentInfo)=>{
+        let errorEmails=[];
+         sentInfo.forEach(element => {
+           if(element.sentError){
+             errorEmails.push(element.sentData.to);
+           }
+         });
+         let dialRef = this.dialog.open(FuseConfirmDialogComponent);
+         if(errorEmails.length>0){
+           dialRef.componentInstance.confirmMessage = "Monity NIE zostały wysłane do następujących uczestników, proszę wysłać wiadomości powtórnie: "+ errorEmails.join(", ");
+         }else{
+           dialRef.componentInstance.confirmMessage = "Monity zostały wysłane do wszytkich uczestników, którzy nie podeszli do egzaminu ";
+         }
+        
+         dialRef.componentInstance.onlyConfirm = true;
+         }, error => {
+           let dialRef = this.dialog.open(FuseConfirmDialogComponent);
+           dialRef.componentInstance.confirmMessage = "Informacje o walidacji egzaminu NIE zostały wysłane. Proszę spróbować ponownie. W przypadku powtórzenia tego komunikatu skontaktuj się z administratorem serwisu."
+           dialRef.componentInstance.onlyConfirm = true;
+   
+         });
+   
+  }
+  sendUserExamInfo(exams:UserCourseTest[]){
+    this.userCourseTestApi.sendEvaluateMessage(exams.map(x=>x.id)).subscribe((sentInfo)=>{
+     let errorEmails=[];
+      sentInfo.forEach(element => {
+        if(element.sentError){
+          errorEmails.push(element.sentData.to);
+        }
+      });
+      let dialRef = this.dialog.open(FuseConfirmDialogComponent);
+      if(errorEmails.length>0){
+        dialRef.componentInstance.confirmMessage = "Informacje o walidacji egzaminu NIE zostały wysłane do następujących uczestników, proszę wysłać wiadomości powtórnie: "+ errorEmails.join(", ");
+      }else{
+        dialRef.componentInstance.confirmMessage = "Informacje o walidacji egzaminu zostały wysłane do wybranych uczestników";
+      }
+     
+      dialRef.componentInstance.onlyConfirm = true;
+      }, error => {
+        let dialRef = this.dialog.open(FuseConfirmDialogComponent);
+        dialRef.componentInstance.confirmMessage = "Informacje o walidacji egzaminu NIE zostały wysłane. Proszę spróbować ponownie. W przypadku powtórzenia tego komunikatu skontaktuj się z administratorem serwisu."
+        dialRef.componentInstance.onlyConfirm = true;
+
+      });
+  
   }
 }

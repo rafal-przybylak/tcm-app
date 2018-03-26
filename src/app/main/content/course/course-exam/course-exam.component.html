@@ -2,6 +2,8 @@
     <div fxFlex="50px" fxLayout="row" fxLayoutGap="8px" >
         <button mat-raised-button color="primary" (click)="avaluate()" >Oceń pytania otwarte testu</button>
         <button mat-raised-button *ngIf="auth.isAdmin" color="primary" (click)="avaluateUsers()" >Przelicz wyniki testu</button>
+        <button mat-raised-button *ngIf="auth.isAdmin" color="primary" matTooltip="Wiślij informacje o wynikach testu do wszystkich uczestników" (click)="sendAllUserExamInfo()" >Wyśli informacje o wynikach</button>
+        <button mat-raised-button *ngIf="auth.isAdmin" color="primary" matTooltip="Wiślij monit w sprawie wykonania testu" (click)="sendExamReminder()" >Wyślij monit</button>
     </div>
 <tcm-app-form fxFlex="1 1 200px" [ctrlAlign]="'center stretch'" [allowAddNew]=false [tcmRolesElement]="['administrator','trainer']" [objectName]="objectName" [formValue]="courseTest"
     [formFields]="objectFields" (onSave)="save($event)" [viewMode]="viewMode">
@@ -15,7 +17,7 @@
             </div>
         </ng-template>
         <div class="order-details tab-content p-24 h-100-p">
-            <app-list [loadRelations]="examUserDef" (onDelete)="deleteUserExam($event)" [modelDef]="userCourseExamDef" [data]="userCourseExamRows" [allowAddNew]="false" [allowEditDelete]="auth.isAdmin" >
+            <app-list [loadRelations]="examUserDef" [chooseCustom]="'Wyśli informacje o wynikach'" [chooseCustomTooltiop]="'Wyśli informacje o wynikach do wydranych uczestników'" (onChoose)="sendUserExamInfo($event)" (onDelete)="deleteUserExam($event)" [modelDef]="userCourseExamDef" [data]="userCourseExamRows" [chooseMode]="auth.isAdmin"  [allowAddNew]="false" [allowEditDelete]="auth.isAdmin" >
             </app-list>
         </div>
     </mat-tab>
