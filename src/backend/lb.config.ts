@@ -20,7 +20,7 @@
 * }
 **/
 export class LoopBackConfig {
-  //public static path: string = '//localhost:3010';
+  //public static path: string = '//localhost:3001';
   public static path: string = '//31.179.176.62:3001';
   public static version: string | number = 'api';
   private static authPrefix: string = '';

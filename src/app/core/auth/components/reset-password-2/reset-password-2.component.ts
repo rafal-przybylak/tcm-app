@@ -114,7 +114,7 @@ export class FuseResetPassword2Component implements OnInit
             this.messages = result.getMessages();
             return this.router.navigateByUrl("auth-login");
           } else {
-            this.errors = ["Link aktywacyjny jest przeterminowany. Wyślij jescze raz żądanie zmiany hasła."]
+            this.errors = result.getResponse().message;// ["Link aktywacyjny jest przeterminowany. Wyślij jescze raz żądanie zmiany hasła."]
           }
     
         //   const redirect = result.getRedirect();

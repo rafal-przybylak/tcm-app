@@ -13,6 +13,6 @@ export class ErrorHandler {
   // ErrorObservable<string> when rxjs version = rc.5
   // I'm leaving any for now to avoid breaking apps using both versions
   public handleError(error: Response): any {
-    return Observable.throw(error.json().error || 'Server error');
+    return Observable.throw(error.json().error || {message:'System API is not available'});
   }
 }

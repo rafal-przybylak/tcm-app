@@ -61,6 +61,7 @@ export class FuseRegister2Component implements OnInit {
             email: ['', [Validators.required, Validators.email]],
             password: ['', Validators.required],
             passwordConfirm: ['', Validators.required],
+            captcha:['', Validators.required],
             termsAccepted:[{disabled:true},{ validator: this.termsAccept }]
         }, { validator: this.matchingPasswords }
         );
@@ -122,8 +123,9 @@ export class FuseRegister2Component implements OnInit {
                 dialRef.componentInstance.onlyConfirm = true;
                 dialRef.afterClosed().subscribe(()=>this.router.navigateByUrl("/courses"));
                 
-            } else {
-                this.errors = ["Podany adres email istnieje już w systemie"];
+            } 
+            else {
+                this.errors = result.getResponse().message; //["Podany adres email istnieje już w systemie"];
             }
 
 

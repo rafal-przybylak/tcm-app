@@ -259,7 +259,7 @@ export class NbEmailPassAuthProvider extends NbAbstractAuthProvider {
         } else {
           errors.push('Something went wrong.');
         }
-
+        
         return Observable.of(
           new NbAuthResult(
             false,

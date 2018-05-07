@@ -83,7 +83,13 @@
                 <mat-error  *ngIf="!termsAccepted">
                     Zaakceptuj warunki korzystania
                  </mat-error>
-               
+                 <re-captcha
+                 formControlName="captcha"
+                 (resolved)="resolved($event)"
+                 required
+                 siteKey="6Lfa-EoUAAAAADLmQ-XP3U9fWPZ-7yKG7NffD4gL"
+                
+               ></re-captcha>
                 <button mat-raised-button color="accent" class="submit-button" aria-label="CREATE AN ACCOUNT"
                         [disabled]="registerForm.invalid" (click)="register()">
                     UTWÓRZ KONTO

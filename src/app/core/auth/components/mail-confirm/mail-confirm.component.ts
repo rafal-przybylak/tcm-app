@@ -19,13 +19,17 @@ export class FuseMailConfirmComponent implements OnInit {
     private id: number;
     private sub: any;
     public isError:boolean=false;
+    public error: string;
     
     ngOnInit(): void {
         
             this.id = +this.route.snapshot.queryParams['uid'];
             this.userApi.confirm(this.id, this.route.snapshot.queryParams['token']).subscribe(resp => {
                 this.router.navigate(["auth-login"]);
-            },error=>this.isError=true);
+            },error=>{
+                this.isError=true;
+                this.error=error.message;
+            });
       
 
 

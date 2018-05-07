@@ -97,7 +97,7 @@ export class FuseLogin2Component implements OnInit {
                 }
                 
             } else {
-                this.errors = result.getErrors();
+                this.errors = result.getResponse().message;
             }
 
 
